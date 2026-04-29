@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Como escalar estudos clínicos com IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   DESIGN SYSTEM — viewport-proportional, 1920×1080 projector base
+   ═══════════════════════════════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:#fff}
+
+/* ─── Slide ─── */
+.s{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;
+   padding:3.5vh 5vw;opacity:0;pointer-events:none;transition:opacity .55s ease}
+.s.on{opacity:1;pointer-events:auto}
+
+/* ─── Fragments ─── */
+.f{opacity:0;transform:translateY(1.2vh);transition:all .5s cubic-bezier(.22,1,.36,1)}
+.f.v{opacity:1;transform:none}
+
+/* ─── Fixed chrome ─── */
+.prog{position:fixed;bottom:0;left:0;height:.3vh;background:#00a868;z-index:100;transition:width .4s}
+.hw{position:fixed;top:2.2vh;right:2.5vw;height:3vh;z-index:90}
+.notes{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.97);
+  border-top:1px solid #e5e5e5;padding:2vh 4vw;transform:translateY(100%);
+  transition:transform .3s;z-index:200;max-height:35vh;overflow-y:auto;
+  font-size:.82vw;line-height:1.7;color:#555}
+.notes.open{transform:translateY(0)}
+.notes h4{color:#111;margin-bottom:.4vh;font-size:.78vw;font-weight:700}
+
+/* ─── Ref footer ─── */
+.ref{position:absolute;bottom:1.2vh;left:5vw;right:16vw;font-size:.5vw;color:#bbb;text-align:center;letter-spacing:.02em}
+
+/* ─── Fixed QR badge ─── */
+.qr-fixed{position:fixed;bottom:1.2vh;right:1.5vw;z-index:90;display:flex;flex-direction:column;align-items:center;gap:.4vh;padding:.7vh .7vw;background:rgba(255,255,255,.96);border-radius:.5vw;border:1px solid #e5e7eb;box-shadow:0 .3vh 1.2vw rgba(0,0,0,.08)}
+.qr-fixed img{width:7vw;height:7vw;border-radius:.3vw}
+.qr-fixed .qr-url{font-size:.65vw;font-weight:800;color:#00a868;text-align:center;line-height:1.2}
+
+/* ─── Fixed Loss counter ─── */
+.loss-fixed{position:fixed;bottom:1.2vh;left:1.5vw;z-index:90;padding:.8vh 1.4vw;background:rgba(254,242,242,.97);border:2px solid #fecaca;border-radius:.5vw;box-shadow:0 .3vh 1.2vw rgba(220,38,38,.1);text-align:center}
+.loss-fixed .loss-lbl{font-size:.65vw;color:#999;font-weight:400;line-height:1.3}
+.loss-fixed .loss-val{font-size:1.8vw;font-weight:900;color:#dc2626;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.2}
+
+/* ─── Colors ─── */
+.grn{color:#00a868}.red{color:#dc2626}.amb{color:#d97706}.blu{color:#2563eb}.pur{color:#7c3aed}
+
+/* ─── Tag ─── */
+.tag{font-size:.62vw;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#aaa;margin-bottom:1.2vh}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 1 — HERO split
+   ═══════════════════════════════════════════════════════════════════ */
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:5vw;align-items:center;width:100%}
+.hero-left h1{font-size:4vw;font-weight:900;line-height:1.06;letter-spacing:-.03em;color:#111}
+.hero-left .sub{font-size:1.1vw;font-weight:300;color:#777;line-height:1.7;margin-top:1.8vh}
+.hero-left .foot{font-size:.78vw;color:#aaa;margin-top:2vh;line-height:1.6}
+.hero-right{display:flex;flex-direction:column;gap:3.2vh;padding-left:2.5vw;border-left:3px solid #f0f0f0}
+.hero-num{display:flex;align-items:baseline;gap:1.2vw}
+.hero-num .v{font-size:5.5vw;font-weight:900;line-height:1;letter-spacing:-.04em}
+.hero-num .l{font-size:1vw;color:#888;line-height:1.35;max-width:12vw}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 2 — Two forces of AI (2 columns)
+   ═══════════════════════════════════════════════════════════════════ */
+.two-forces{display:grid;grid-template-columns:1fr 1fr;gap:4vw;width:100%;margin-top:2.5vh}
+.force{padding:2.5vh 2vw;border-radius:.6vw;position:relative}
+.force .icon{font-size:3vw;margin-bottom:1.5vh;display:block}
+.force h3{font-size:1.8vw;font-weight:800;margin-bottom:1.2vh;color:#111}
+.force .bar{width:3vw;height:3px;border-radius:2px;margin-bottom:1.5vh}
+.force p{font-size:.95vw;line-height:1.65;color:#555}
+.force .examples{font-size:.78vw;color:#999;margin-top:1vh;line-height:1.5;font-style:italic}
+.force-quote{text-align:center;margin-top:3vh}
+.force-quote p{font-size:1.3vw;font-style:italic;color:#444;line-height:1.55}
+.force-quote p strong{font-weight:700;color:#111}
+.force-quote cite{font-size:.6vw;color:#bbb;display:block;margin-top:.6vh;font-style:normal}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 3 — Garbage In Garbage Out (dramatic + 3 pillars)
+   ═══════════════════════════════════════════════════════════════════ */
+.s3-top{text-align:center;margin-bottom:2.5vh}
+.s3-top h2{font-size:3.5vw;font-weight:900;line-height:1.06;letter-spacing:-.02em}
+.s3-top .sub{font-size:1.1vw;color:#777;margin-top:1vh;font-weight:300;line-height:1.6}
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5vw;width:100%}
+.pillar{padding:2vh 1.5vw;border-left:3px solid transparent}
+.pillar .icon{font-size:2.5vw;margin-bottom:1.2vh;display:block}
+.pillar h3{font-size:1.2vw;font-weight:700;margin-bottom:.8vh;color:#111}
+.pillar .bar{width:2.5vw;height:3px;border-radius:2px;margin-bottom:1vh}
+.pillar p{font-size:.88vw;line-height:1.6;color:#555}
+.pillar .note{font-size:.68vw;color:#aaa;margin-top:.6vh}
+.s3-bottom{text-align:center;margin-top:2.5vh}
+.s3-bottom p{font-size:1vw;color:#555;line-height:1.6}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 4 — Dramatic question (millions of lives)
+   ═══════════════════════════════════════════════════════════════════ */
+.dramatic{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.dramatic .above{font-size:1.2vw;font-weight:400;color:#888;margin-bottom:2vh;line-height:1.5}
+.dramatic .mega{font-size:10vw;font-weight:900;line-height:.88;letter-spacing:-.06em}
+.dramatic .below{font-size:1.8vw;font-weight:300;color:#555;margin-top:2.5vh;line-height:1.5}
+.dramatic .answer{font-size:1.5vw;font-weight:700;color:#00a868;margin-top:3vh;letter-spacing:.02em}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 5 — How the world does it (LLM pipelines)
+   ═══════════════════════════════════════════════════════════════════ */
+.s5-head{text-align:center;margin-bottom:2vh}
+.s5-head h2{font-size:2.8vw;font-weight:800;line-height:1.1;letter-spacing:-.02em}
+.s5-head .sub{font-size:1vw;color:#777;margin-top:.8vh;font-weight:300}
+
+/* generic pipeline diagram */
+.llm-pipe{display:flex;align-items:center;justify-content:center;gap:.3vw;margin-bottom:2.5vh;flex-wrap:wrap}
+.llm-step{padding:1.2vh 1.1vw;border-radius:.4vw;font-size:.78vw;font-weight:600;text-align:center;
+  background:#f8f8f8;border:1px solid #e5e5e5;min-width:7vw;color:#333}
+.llm-step small{display:block;font-size:.58vw;font-weight:400;color:#999;margin-top:.3vh}
+.llm-step.ai{background:#f0faf5;border-color:#c6e7d8;color:#00a868}
+.llm-arr{color:#ccc;font-size:1vw}
+
+/* evidence cards */
+.evidence{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5vw;width:100%}
+.ev-card{padding:2vh 1.2vw;border-radius:.5vw;background:#fafafa;text-align:center}
+.ev-card .num{font-size:3vw;font-weight:900;line-height:1;letter-spacing:-.02em}
+.ev-card .desc{font-size:.78vw;color:#666;margin-top:.8vh;line-height:1.45}
+.ev-card .src{font-size:.55vw;color:#bbb;margin-top:.5vh}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 6 — How Hapvida does it (our pipeline)
+   ═══════════════════════════════════════════════════════════════════ */
+.s6-head{text-align:center;margin-bottom:1.5vh}
+.s6-head h2{font-size:2.8vw;font-weight:800;line-height:1.1;letter-spacing:-.02em}
+
+.hapvida-pipe{display:flex;align-items:stretch;justify-content:center;gap:.3vw;width:100%;flex-wrap:wrap}
+.hp-step{padding:1.5vh 1vw;border-radius:.5vw;font-size:.8vw;font-weight:600;text-align:center;
+  min-width:7.5vw;background:#f0faf5;border:1px solid #d1e7dd;color:#333;
+  display:flex;flex-direction:column;justify-content:center}
+.hp-step.highlight{background:#00a868;color:#fff;border-color:#00a868}
+.hp-step small{display:block;font-size:.58vw;font-weight:400;margin-top:.3vh;opacity:.7}
+.hp-arr{color:#00a868;font-size:1.1vw;display:flex;align-items:center}
+
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:1.5vw;width:100%;margin-top:1.8vh}
+.shot{border-radius:.5vw;overflow:hidden;border:1px solid #e5e7eb;box-shadow:0 .3vh 1.2vw rgba(0,0,0,.07)}
+.shot img{width:100%;display:block}
+.shot-t{padding:.6vh .8vw;font-size:.68vw;font-weight:600;background:#f8f9fa;color:#333}
+.shot-t span{font-weight:400;color:#aaa;margin-left:.3vw}
+
+.stats{display:flex;gap:3vw;justify-content:center;margin-top:1.8vh}
+.stat{text-align:center}
+.stat .val{font-size:2vw;font-weight:900;color:#00a868}
+.stat .lbl{font-size:.62vw;color:#888;margin-top:.3vh;line-height:1.3}
+
+/* ─── Mockup annotations ─── */
+.mockup{position:relative;width:100%;margin-top:1.5vh}
+.mockup img{width:100%;border-radius:.5vw;border:1px solid #e5e7eb;box-shadow:0 .4vh 2vw rgba(0,0,0,.08)}
+.mockup .ann{position:absolute;background:#00a868;color:#fff;font-size:.7vw;font-weight:700;
+  padding:.5vh .8vw;border-radius:.3vw;white-space:nowrap;z-index:2;
+  box-shadow:0 .2vh .6vw rgba(0,168,104,.3)}
+.mockup .ann::after{content:'';position:absolute;width:0;height:0;
+  border-left:.4vw solid transparent;border-right:.4vw solid transparent;
+  border-top:.4vw solid #00a868;bottom:-.38vw;left:50%;transform:translateX(-50%)}
+.mockup .ann.bl{background:#2563eb;box-shadow:0 .2vh .6vw rgba(37,99,235,.3)}
+.mockup .ann.bl::after{border-top-color:#2563eb}
+.mockup .ann.pu{background:#7c3aed;box-shadow:0 .2vh .6vw rgba(124,58,237,.3)}
+.mockup .ann.pu::after{border-top-color:#7c3aed}
+.mockup .ann.am{background:#d97706;box-shadow:0 .2vh .6vw rgba(217,119,6,.3)}
+.mockup .ann.am::after{border-top-color:#d97706}
+
+/* ─── Hapvida detail layout ─── */
+.hp-detail{display:grid;grid-template-columns:1.2fr 1fr;gap:2.5vw;width:100%;align-items:start;margin-top:1.5vh}
+.hp-detail-left{}
+.hp-detail-right{display:flex;flex-direction:column;gap:1.5vh}
+.hp-explain{padding:1.5vh 1.2vw;border-radius:.4vw;background:#f8fdfb;border:1px solid #d1e7dd}
+.hp-explain h4{font-size:.9vw;font-weight:700;color:#00a868;margin-bottom:.6vh}
+.hp-explain p{font-size:.78vw;line-height:1.6;color:#555}
+.hp-explain .step-detail{display:flex;align-items:flex-start;gap:.6vw;margin-top:.8vh}
+.hp-explain .step-num{background:#00a868;color:#fff;font-size:.65vw;font-weight:800;
+  width:1.6vw;height:1.6vw;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;margin-top:.1vh}
+.hp-explain .step-text{font-size:.75vw;line-height:1.5;color:#444}
+.hp-explain .step-text strong{color:#111}
+
+/* ─── Stats slide ─── */
+.stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2vw;width:100%;margin-top:3vh}
+.stat-big{text-align:center;padding:3vh 1vw}
+.stat-big .val{font-size:4vw;font-weight:900;line-height:1;letter-spacing:-.03em}
+.stat-big .lbl{font-size:.85vw;color:#666;margin-top:1vh;line-height:1.4}
+.stat-big .src{font-size:.55vw;color:#bbb;margin-top:.5vh}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 7 — Beyond: Digital Twins + Synthetic + Federated + 18mo
+   ═══════════════════════════════════════════════════════════════════ */
+.s7-head{text-align:center;margin-bottom:2vh}
+.s7-head h2{font-size:2.8vw;font-weight:800;line-height:1.1;letter-spacing:-.02em}
+
+.horizon{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5vw;width:100%}
+.hcard{padding:2vh 1.5vw;border-left:3px solid transparent}
+.hcard .icon{font-size:2.5vw;margin-bottom:1.2vh;display:block}
+.hcard h3{font-size:1.2vw;font-weight:700;margin-bottom:.8vh;color:#111}
+.hcard .bar{width:2.5vw;height:3px;border-radius:2px;margin-bottom:1vh}
+.hcard p{font-size:.88vw;line-height:1.6;color:#555}
+.hcard .note{font-size:.65vw;color:#aaa;margin-top:.6vh}
+
+.s7-mega{text-align:center;margin-top:3vh}
+.s7-mega .num{font-size:6vw;font-weight:900;color:#00a868;line-height:1;letter-spacing:-.04em}
+.s7-mega .after{font-size:1.1vw;color:#666;margin-top:1vh;font-weight:300}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 8 — Closing
+   ═══════════════════════════════════════════════════════════════════ */
+.closing{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:3.5vh}
+.closing .quote{font-size:2.4vw;font-weight:400;font-style:italic;line-height:1.45;color:#222;max-width:68vw}
+.closing .quote strong{font-weight:800}
+
+.profile{display:flex;align-items:center;gap:4vw}
+.profile .left{display:flex;flex-direction:column;align-items:center;gap:.8vh}
+.profile .avatar{width:8vw;height:8vw;border-radius:50%;object-fit:cover;border:3px solid #00a868}
+.profile .name{font-size:1.05vw;font-weight:800;color:#111}
+.profile .role{font-size:.78vw;color:#777;line-height:1.5;text-align:center}
+.profile .links{display:flex;flex-direction:column;gap:.3vh;margin-top:.4vh}
+.profile .links a{font-size:.7vw;color:#00a868;text-decoration:none;font-weight:600}
+.profile .logos{display:flex;gap:.8vw;margin-top:.6vh;align-items:center}
+.profile .logos img{height:1.8vh}
+
+.profile .right{display:flex;flex-direction:column;align-items:center;gap:.8vh}
+.profile .right h3{font-size:2.2vw;font-weight:800;color:#111}
+.profile .right .ask{font-size:.85vw;color:#888;font-weight:300}
+.profile .right img{border-radius:.4vw}
+.profile .right .url{font-size:.5vw;color:#bbb}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   SLIDE 6 — Pipeline Mockup (simulação ao vivo)
+   ═══════════════════════════════════════════════════════════════════ */
+.pipeline-tl{display:flex;align-items:flex-start;justify-content:center;gap:0;width:100%;margin-top:.8vh}
+.pt-step{display:flex;flex-direction:column;align-items:center;gap:.2vh;min-width:5vw;position:relative}
+.pt-icon{font-size:1.3vw;width:2.6vw;height:2.6vw;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;border:2px solid #e0e0e0;position:relative;z-index:2}
+.pt-step.done .pt-icon{background:#e6f7ef;border-color:#00a868}
+.pt-step.current .pt-icon{background:#00a868;border-color:#00a868;box-shadow:0 0 0 .3vw rgba(0,168,104,.15)}
+.pt-label{font-size:.52vw;text-align:center;color:#888;line-height:1.25;margin-top:.2vh}
+.pt-step.done .pt-label,.pt-step.current .pt-label{color:#333;font-weight:600}
+.pt-line{width:2.8vw;height:2px;background:#e0e0e0;margin-top:1.3vw;flex-shrink:0}
+.pt-line.done{background:#00a868}
+
+.mock-dash{display:grid;grid-template-columns:.75fr 1.5fr .75fr;gap:.8vw;width:100%;margin-top:1vh}
+.mk-panel{border-radius:.4vw;overflow:hidden;border:1px solid #e5e7eb;box-shadow:0 .2vh .8vw rgba(0,0,0,.06)}
+.mk-head{padding:.45vh .7vw;font-size:.55vw;font-weight:700;color:#fff;display:flex;align-items:center;gap:.4vw;letter-spacing:.03em}
+.mk-head.h-dark{background:#1e293b}.mk-head.h-green{background:#00a868}.mk-head.h-blue{background:#2563eb}
+.mk-pulse{width:.4vw;height:.4vw;border-radius:50%;background:#4ade80;animation:mk-glow 2s infinite}
+@keyframes mk-glow{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(74,222,128,.6)}50%{opacity:.6;box-shadow:0 0 0 .25vw rgba(74,222,128,0)}}
+.mk-body{padding:.6vh .7vw;background:#fff}
+.mk-stat{display:flex;justify-content:space-between;align-items:center;padding:.35vh 0;border-bottom:1px solid #f3f4f6}
+.mk-stat:last-child{border-bottom:none}
+.mk-val{font-size:1.3vw;font-weight:800;color:#111;letter-spacing:-.02em}
+.mk-lbl{font-size:.5vw;color:#888;text-align:right;line-height:1.25}
+
+.pc{padding:.5vh .6vw;border-radius:.3vw;margin-bottom:.4vh;border-left:3px solid transparent}
+.pc:last-child{margin-bottom:0}
+.pc.pc-yes{background:#f0faf5;border-left-color:#00a868}.pc.pc-partial{background:#fffbeb;border-left-color:#d97706}
+.pc-row{display:flex;justify-content:space-between;align-items:center}
+.pc-name{font-size:.6vw;font-weight:700;color:#111}
+.pc-badge{font-size:.45vw;font-weight:800;padding:.12vh .35vw;border-radius:.12vw;letter-spacing:.03em}
+.pc-badge.bg-green{background:#dcfce7;color:#166534}.pc-badge.bg-amber{background:#fef3c7;color:#92400e}
+.pc-dx{font-size:.5vw;color:#555;margin-top:.15vh}
+.pc-trial{font-size:.45vw;color:#2563eb;margin-top:.1vh;font-weight:500}
+.pc-crits{display:flex;gap:.25vw;flex-wrap:wrap;margin-top:.25vh}
+.pc-crit{font-size:.42vw;padding:.08vh .25vw;border-radius:.08vw;font-weight:600}
+.pc-crit.ok{background:#dcfce7;color:#166534}.pc-crit.no{background:#fef3c7;color:#92400e}
+.pc-ai-text{font-size:.44vw;color:#555;margin-top:.25vh;font-style:italic;line-height:1.35;padding:.25vh .4vw;background:#f8fdfb;border-radius:.12vw}
+
+.qi{display:flex;align-items:center;gap:.4vw;padding:.4vh .4vw;border-bottom:1px solid #f3f4f6}
+.qi:last-child{border-bottom:none}
+.qi-pos{font-size:.65vw;font-weight:800;color:#00a868;width:1.1vw;text-align:center;flex-shrink:0}
+.qi.qi-done .qi-pos{color:#aaa}
+.qi-info{flex:1;min-width:0}
+.qi-name{font-size:.5vw;font-weight:700;color:#111;display:block}
+.qi-tag{font-size:.4vw;font-weight:700;padding:.08vh .25vw;border-radius:.08vw;display:inline-block;margin-top:.08vh}
+.qi-tag.tg-green{background:#dcfce7;color:#166534}.qi-tag.tg-amber{background:#fef3c7;color:#92400e}.qi-tag.tg-gray{background:#f3f4f6;color:#888}
+.qi-st{font-size:.4vw;color:#aaa;text-align:right;flex-shrink:0;line-height:1.2}
+.qi.qi-priority{background:#f0faf5}
+.qi.qi-done{opacity:.5}
+
+.flow-arrow-col{display:flex;align-items:center;justify-content:center;font-size:1.2vw;color:#00a868;padding-top:2vh}
+
+/* ─── Responsive fallback ─── */
+@media(max-width:900px){
+  .hero,.two-forces,.pillars,.evidence,.horizon,.shots{grid-template-columns:1fr}
+  .s{padding:2vh 3vw}
+  .llm-pipe,.hapvida-pipe{flex-direction:column;align-items:center}
+  .llm-arr,.hp-arr{transform:rotate(90deg)}
+  .profile{flex-direction:column}
+  .stats{flex-direction:column;gap:1vh}
+}
+</style>
+</head>
+<body>
+
+<img src="img/hapvida-logo.png" alt="Hapvida" class="hw">
+<div class="prog" id="prog"></div>
+<div class="notes" id="nd"></div>
+<div class="qr-fixed"><img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://bit.ly/RWE360pdf&bgcolor=ffffff&color=222222" alt="QR"><div class="qr-url">bit.ly/RWE360pdf</div></div>
+<div class="loss-fixed"><div class="loss-lbl">💸 Desde o início desta apresentação</div><div class="loss-val" id="loss-fixed">US$ 0</div><div class="loss-lbl">perdidos em recrutamento</div></div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 1 · A CIÊNCIA AVANÇA. O RECRUTAMENTO TRAVA.
+     Narrativa: choque com números, estabelecer o problema central
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="0">
+  <div class="f hero">
+    <div class="hero-left">
+      <p class="tag">Pesquisa Clínica · Hapvida · 2026</p>
+      <h1>A ciência avança.<br><span class="grn">O recrutamento<br>trava.</span></h1>
+      <p class="sub">Como escalar estudos clínicos e de vida real com recrutamento através de inteligência artificial</p>
+      <p class="foot">260 estudos encerrados (0–1 paciente) em um único centro nos EUA.<br>Custo: <strong>US$ 1M</strong> desperdiçado.</p>
+    </div>
+    <div class="hero-right" style="position:relative">
+      <div class="f hero-num">
+        <div class="v red">50%</div>
+        <div class="l">dos estudos falham<br>no recrutamento</div>
+      </div>
+      <div class="f hero-num">
+        <div class="v amb">US$8M</div>
+        <div class="l">custo por dia<br>de atraso</div>
+      </div>
+    </div>
+  </div>
+  <p class="ref">Treweek et al., Cochrane, 2018 [1] · Houghton et al., Cochrane, 2020 [2] · Darden et al., JAMA Network Open, 2022 [3] · Brøgger-Mikkelsen et al., JMIR, 2020 [4]</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 2 · DUAS FORÇAS DA IA
+     Narrativa: generativa automatiza o manual, preditiva prevê o futuro
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="1">
+  <div class="f" style="text-align:center;margin-bottom:1vh">
+    <p class="tag">Módulo 1 · Entendendo a IA</p>
+    <h2 style="font-size:3.2vw;font-weight:800;line-height:1.08;letter-spacing:-.02em">Duas forças.<br><span class="grn">Dois superpoderes.</span></h2>
+  </div>
+  <div class="two-forces">
+    <div class="f force" style="background:#f8fdfb;border-left:4px solid #00a868;border-radius:.6vw">
+      <span class="icon">🧠</span>
+      <h3 class="grn">IA Generativa</h3>
+      <div class="bar" style="background:#00a868"></div>
+      <p>Transforma e <strong>automatiza processos manuais</strong>. LLMs leem prontuários inteiros, extraem dados estruturados, geram sumários clínicos — e fazem triagem em linguagem natural.</p>
+      <p class="examples">ChatGPT, GPT-4, LLaMA, Claude · NER clínico · AI Scribe · Sumarização de prontuário</p>
+    </div>
+    <div class="f force" style="background:#f5f3ff;border-left:4px solid #7c3aed;border-radius:.6vw">
+      <span class="icon">📈</span>
+      <h3 class="pur">IA Preditiva</h3>
+      <div class="bar" style="background:#7c3aed"></div>
+      <p>Prevê o futuro. Modelos que aprendem padrões em dados longitudinais para antecipar quem vai <strong>desenvolver uma condição, responder a um tratamento ou abandonar</strong> um estudo.</p>
+      <p class="examples">Modelos de trajetória · Risk scoring · Digital twins · Federated learning</p>
+    </div>
+  </div>
+  <div class="f force-quote">
+    <p>"O futuro da medicina não é tratar doenças — é tratar <strong>trajetórias</strong>."</p>
+    <cite>Khera et al., JACC, 2024 [5]</cite>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 3 · GARBAGE IN, GARBAGE OUT
+     Narrativa: dados são caos → precisamos organizar → 3 pilares
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="2">
+  <div class="f s3-top">
+    <p class="tag">Módulo 2 · O alicerce</p>
+    <h2><span style="color:#dc2626">Garbage in,</span> garbage out.</h2>
+    <p class="sub">80% dos dados clínicos estão em texto livre. Sem estruturação,<br>nenhuma IA do mundo vai encontrar o paciente certo.</p>
+  </div>
+  <div class="pillars">
+    <div class="f pillar" style="border-left-color:#2563eb">
+      <span class="icon">🏗️</span>
+      <h3>OMOP-CDM</h3>
+      <div class="bar" style="background:#2563eb"></div>
+      <p>A Pedra de Roseta dos dados clínicos. <strong>331 fontes, 2.1 bilhões de registros, 34 países.</strong> 96–99% dos registros mapeados.</p>
+      <p class="note">Reich et al., JAMIA, 2024 [16] · Voss et al., 2015 [17]</p>
+    </div>
+    <div class="f pillar" style="border-left-color:#00a868">
+      <span class="icon">🌐</span>
+      <h3>SNOMED CT</h3>
+      <div class="bar" style="background:#00a868"></div>
+      <p><strong>10M+ conceitos, 136 vocabulários.</strong> "Infarto" em CID, texto livre e SNOMED são 3 coisas — SNOMED as unifica.</p>
+      <p class="note">OHDSI Vocabularies · Reich et al., 2024 [16]</p>
+    </div>
+    <div class="f pillar" style="border-left-color:#7c3aed">
+      <span class="icon">🤖</span>
+      <h3>AI Scribe</h3>
+      <div class="bar" style="background:#7c3aed"></div>
+      <p>LLMs com NER clínico transformam texto livre em <strong>dados estruturados e consultáveis</strong>. Extrair "HbA1c > 7,5%" de notas de endo.</p>
+      <p class="note">von Itzstein, JAMA Oncol, 2021 [10] · Meystre, 2023 [20]</p>
+    </div>
+  </div>
+  <div class="f s3-bottom">
+    <p><strong>Sem OMOP, você não escala multicêntrico.</strong> Com OMOP, você conecta a Hapvida a qualquer rede de pesquisa global.</p>
+  </div>
+  <p class="ref">Ward et al., PLoS ONE, 2024 [18] · Vashisht et al., JAMA Network Open, 2018 [19]</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 4 · MILHÕES DE VIDAS — COMO ACHAR O PACIENTE CERTO?
+     Narrativa: pausa dramática → escala do problema → "a gente sabe"
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="3">
+  <div class="dramatic">
+    <p class="f above">Os dados estão organizados. A infraestrutura existe.<br>Agora o desafio real:</p>
+    <p class="f mega grn">Milhões</p>
+    <p class="f below">de vidas na base. Como achar<br>o paciente certo, para o estudo certo, no momento certo?</p>
+    <p class="f answer">A gente sabe o que fazer.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 5 · COMO O MUNDO ESTÁ FAZENDO
+     Narrativa: pipeline genérico de LLM → evidências de 4 sistemas
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="4">
+  <div class="f s5-head">
+    <p class="tag">Módulo 3 · LLMs em recrutamento clínico</p>
+    <h2>Como o mundo está fazendo</h2>
+    <p class="sub">O pipeline que Stanford, NIH, MSKCC e Europa já validaram</p>
+  </div>
+
+  <div class="f llm-pipe">
+    <div class="llm-step">📄 EHR / Prontuário<small>Dados não-estruturados</small></div>
+    <span class="llm-arr">→</span>
+    <div class="llm-step ai">🧠 LLM Parsing<small>Extração + NER</small></div>
+    <span class="llm-arr">→</span>
+    <div class="llm-step ai">🔍 Trial Matching<small>Critérios vs. perfil</small></div>
+    <span class="llm-arr">→</span>
+    <div class="llm-step ai">📊 Ranking<small>Elegibilidade + aderência</small></div>
+    <span class="llm-arr">→</span>
+    <div class="llm-step">👩‍⚕️ Clínico<small>Decisão humana final</small></div>
+  </div>
+
+  <div class="f evidence">
+    <div class="ev-card">
+      <p class="num grn">98–100%</p>
+      <p class="desc">concordância com clínicos<br>na triagem de elegibilidade</p>
+      <p class="src">RECTIFIER · GPT-4<br>Cunningham, JACC 2024 [11]</p>
+    </div>
+    <div class="ev-card">
+      <p class="num amb">US$0,10</p>
+      <p class="desc">custo por paciente triado<br>vs. revisão manual tradicional</p>
+      <p class="src">Cunningham et al.<br>JACC, 2024 [11]</p>
+    </div>
+    <div class="ev-card">
+      <p class="num blu">92%</p>
+      <p class="desc">dos pacientes onco com<br>≥1 trial relevante no top-20</p>
+      <p class="src">TrialMatchAI · RAG + CoT<br>Abdallah, Nat Commun 2026 [12]</p>
+    </div>
+    <div class="ev-card">
+      <p class="num pur">2× mais</p>
+      <p class="desc">pacientes elegíveis encontrados<br>vs. triagem manual (81.8% vs 36.4%)</p>
+      <p class="src">TrialGPT adaptado · LLM local<br>Syed, JAMIA 2026 [21]</p>
+    </div>
+  </div>
+
+  <div class="f" style="text-align:center;margin-top:2vh">
+    <p style="font-size:.88vw;color:#777;line-height:1.6">Gong et al. (JCO CCI, 2026): <strong>98.348 pacientes</strong> triados, <strong>825 elegíveis</strong>, <strong>117 inscritos</strong> — revisão manual reduzida em <strong>10×</strong>, tempo de triagem <strong>-41%</strong> [13]</p>
+  </div>
+
+  <p class="ref">Cunningham et al., JACC, 2024 [11] · Abdallah et al., Nat Commun, 2026 [12] · Gong et al., JCO CCI, 2026 [13] · Syed et al., JAMIA, 2026 [21] · Callies et al., Commun Med, 2025 [22]</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 6a · VISÃO GERAL DO PIPELINE
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="5">
+  <div class="f s6-head">
+    <p class="tag">Hapvida · Pipeline em ação · Processo contínuo</p>
+    <h2>Como <span class="grn">a gente</span> faz</h2>
+  </div>
+
+  <div class="f pipeline-tl" style="margin-top:4vh">
+    <div class="pt-step done"><div class="pt-icon" style="width:3.8vw;height:3.8vw;font-size:1.8vw">🕐</div><div class="pt-label" style="font-size:.7vw;margin-top:.6vh">02:00 AM<br>Coleta automática</div></div>
+    <div class="pt-line done" style="width:4vw;margin-top:1.9vw"></div>
+    <div class="pt-step done"><div class="pt-icon" style="width:3.8vw;height:3.8vw;font-size:1.8vw">🔍</div><div class="pt-label" style="font-size:.7vw;margin-top:.6vh">Match<br>Determinístico</div></div>
+    <div class="pt-line done" style="width:4vw;margin-top:1.9vw"></div>
+    <div class="pt-step done"><div class="pt-icon" style="width:3.8vw;height:3.8vw;font-size:1.8vw">🧠</div><div class="pt-label" style="font-size:.7vw;margin-top:.6vh">IA Descreve<br>Resumo + explicação</div></div>
+    <div class="pt-line done" style="width:4vw;margin-top:1.9vw"></div>
+    <div class="pt-step"><div class="pt-icon" style="width:3.8vw;height:3.8vw;font-size:1.8vw">📱</div><div class="pt-label" style="font-size:.7vw;margin-top:.6vh">App Humanos<br>Duplo sim primeiro</div></div>
+    <div class="pt-line" style="width:4vw;margin-top:1.9vw"></div>
+    <div class="pt-step"><div class="pt-icon" style="width:3.8vw;height:3.8vw;font-size:1.8vw">👨‍⚕️</div><div class="pt-label" style="font-size:.7vw;margin-top:.6vh">Médico<br>Confirma elegibilidade</div></div>
+    <div class="pt-line" style="width:4vw;margin-top:1.9vw"></div>
+    <div class="pt-step"><div class="pt-icon" style="width:3.8vw;height:3.8vw;font-size:1.8vw">📞</div><div class="pt-label" style="font-size:.7vw;margin-top:.6vh">Contato<br>Paciente</div></div>
+  </div>
+
+  <div class="f" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2vw;width:100%;margin-top:5vh">
+    <div style="padding:2.5vh 1.8vw;border-radius:.5vw;background:#f0faf5;border-left:4px solid #00a868">
+      <p style="font-size:1.5vw;font-weight:800;color:#00a868;margin-bottom:.6vh">Automático</p>
+      <p style="font-size:.88vw;color:#555;line-height:1.6">Todo dia às <strong>2h da manhã</strong>, o sistema coleta consultas do dia anterior + pacientes de centros estratégicos dos próximos 7 dias. Faz match determinístico com critérios dos estudos.</p>
+    </div>
+    <div style="padding:2.5vh 1.8vw;border-radius:.5vw;background:#f5f3ff;border-left:4px solid #7c3aed">
+      <p style="font-size:1.5vw;font-weight:800;color:#7c3aed;margin-bottom:.6vh">Inteligente</p>
+      <p style="font-size:.88vw;color:#555;line-height:1.6">Pacientes com match voltam pra IA. Ela lê o prontuário, <strong>descreve e tenta explicar o match</strong> ou contrapor — gera resumo de elegibilidade critério a critério.</p>
+    </div>
+    <div style="padding:2.5vh 1.8vw;border-radius:.5vw;background:#eff6ff;border-left:4px solid #2563eb">
+      <p style="font-size:1.5vw;font-weight:800;color:#2563eb;margin-bottom:.6vh">Humano</p>
+      <p style="font-size:.88vw;color:#555;line-height:1.6">Recrutadores avaliam no app, priorizando <strong>duplo sim</strong>. Médicos confirmam elegibilidade. Contato feito com paciente. <strong>Processo contínuo.</strong></p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 6b · COLETA + MATCH DETERMINÍSTICO
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="6">
+  <div class="f s6-head">
+    <p class="tag">Passo 1 · Coleta automática · Todo dia às 02:00</p>
+    <h2>🕐 <span class="grn">02:00 AM</span> — Ninguém dorme</h2>
+  </div>
+
+  <div class="f pipeline-tl" style="margin-top:1vh">
+    <div class="pt-step current"><div class="pt-icon">🕐</div><div class="pt-label">02:00 AM<br>Coleta</div></div>
+    <div class="pt-line done"></div>
+    <div class="pt-step current"><div class="pt-icon">🔍</div><div class="pt-label">Match<br>Determinístico</div></div>
+    <div class="pt-line"></div>
+    <div class="pt-step"><div class="pt-icon">🧠</div><div class="pt-label">IA</div></div>
+    <div class="pt-line"></div>
+    <div class="pt-step"><div class="pt-icon">📱</div><div class="pt-label">App</div></div>
+    <div class="pt-line"></div>
+    <div class="pt-step"><div class="pt-icon">👨‍⚕️</div><div class="pt-label">Médico</div></div>
+    <div class="pt-line"></div>
+    <div class="pt-step"><div class="pt-icon">📞</div><div class="pt-label">Contato</div></div>
+  </div>
+
+  <div class="f" style="display:grid;grid-template-columns:1fr 1fr;gap:3vw;width:100%;margin-top:2.5vh;align-items:start">
+    <!-- Coleta -->
+    <div class="mk-panel" style="box-shadow:0 .4vh 2vw rgba(0,0,0,.08)">
+      <div class="mk-head h-dark" style="padding:.8vh 1.2vw;font-size:.72vw"><span class="mk-pulse"></span> Coleta Automática · 02:00 AM</div>
+      <div class="mk-body" style="padding:1.5vh 1.5vw">
+        <div class="mk-stat" style="padding:.8vh 0"><span class="mk-val" style="font-size:3.5vw">847</span><span class="mk-lbl" style="font-size:.75vw">Consultas avaliadas<br>do dia anterior</span></div>
+        <div class="mk-stat" style="padding:.8vh 0"><span class="mk-val" style="font-size:3.5vw">1.203</span><span class="mk-lbl" style="font-size:.75vw">Pacientes de centros<br>estratégicos · próximos 7d</span></div>
+      </div>
+    </div>
+    <!-- Match -->
+    <div class="mk-panel" style="box-shadow:0 .4vh 2vw rgba(0,168,104,.12)">
+      <div class="mk-head h-green" style="padding:.8vh 1.2vw;font-size:.72vw">🔍 Match Determinístico · Critérios dos Estudos</div>
+      <div class="mk-body" style="padding:1.5vh 1.5vw">
+        <div class="mk-stat" style="padding:.8vh 0;border-bottom:2px solid #d1e7dd"><span class="mk-val grn" style="font-size:3.5vw">23</span><span class="mk-lbl" style="font-size:.75vw">Com match completo<br>em critérios de inclusão</span></div>
+        <div class="mk-stat" style="padding:.8vh 0"><span class="mk-val amb" style="font-size:2.5vw">9</span><span class="mk-lbl" style="font-size:.75vw">Match parcial<br>exame ou dado pendente</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f" style="text-align:center;margin-top:3vh">
+    <p style="font-size:1.05vw;color:#555;line-height:1.7">De <strong>2.050 prontuários</strong> avaliados automaticamente → <strong class="grn">23 pacientes</strong> com match em critérios.<br>Esses 23 agora vão para a <strong>IA analisar em profundidade</strong>.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 6c · IA DESCREVE E CONTRAPÕE
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="7">
+  <div class="f s6-head">
+    <p class="tag">Passo 2 · IA analisa elegibilidade · Critério a critério</p>
+    <h2>🧠 A IA <span class="grn">descreve, explica</span> e contrapõe</h2>
+  </div>
+
+  <div class="f pipeline-tl" style="margin-top:1vh">
+    <div class="pt-step done"><div class="pt-icon">🕐</div><div class="pt-label">02:00 AM</div></div>
+    <div class="pt-line done"></div>
+    <div class="pt-step done"><div class="pt-icon">🔍</div><div class="pt-label">Match</div></div>
+    <div class="pt-line done"></div>
+    <div class="pt-step current"><div class="pt-icon">🧠</div><div class="pt-label">IA Descreve<br>Resumo + explicação</div></div>
+    <div class="pt-line"></div>
+    <div class="pt-step"><div class="pt-icon">📱</div><div class="pt-label">App</div></div>
+    <div class="pt-line"></div>
+    <div class="pt-step"><div class="pt-icon">👨‍⚕️</div><div class="pt-label">Médico</div></div>
+    <div class="pt-line"></div>
+    <div class="pt-step"><div class="pt-icon">📞</div><div class="pt-label">Contato</div></div>
+  </div>
+
+  <div class="f" style="display:grid;grid-template-columns:1fr 1fr;gap:2vw;width:100%;margin-top:1.5vh;align-items:start">
+    <!-- Duplo Sim -->
+    <div class="mk-panel" style="box-shadow:0 .4vh 2vw rgba(0,168,104,.12)">
+      <div class="mk-head h-green" style="padding:.6vh 1vw;font-size:.62vw">✓✓ DUPLO SIM — IA confirma elegibilidade</div>
+      <div class="mk-body" style="padding:1vh 1.2vw">
+        <div class="pc pc-yes" style="padding:.8vh 1vw">
+          <div class="pc-row"><span class="pc-name" style="font-size:.78vw">M.S.R., 67a, F</span><span class="pc-badge bg-green" style="font-size:.55vw">✓✓ DUPLO SIM</span></div>
+          <div class="pc-dx" style="font-size:.62vw">LLC — Leucemia Linfocítica Crônica</div>
+          <div class="pc-trial" style="font-size:.55vw">NCT05839132 · Pirtobrutinibe pós-BTKi</div>
+          <div class="pc-crits" style="margin-top:.4vh;gap:.3vw">
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">Dx LLC ✓</span>
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">BTKi prévio ✓</span>
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">ECOG 0 ✓</span>
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">Hepático ok ✓</span>
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">Sem Richter ✓</span>
+          </div>
+          <div class="pc-ai-text" style="font-size:.56vw;margin-top:.4vh;padding:.4vh .6vw">"Paciente preenche todos os critérios de inclusão. Diagnóstico de LLC confirmado em 03/2023, uso prévio de ibrutinibe por 14 meses com progressão documentada, ECOG 0, função hepática preservada (TGO 28, TGP 31), sem transformação de Richter."</div>
+        </div>
+        <div class="pc pc-yes" style="padding:.8vh 1vw">
+          <div class="pc-row"><span class="pc-name" style="font-size:.78vw">A.C.F., 71a, F</span><span class="pc-badge bg-green" style="font-size:.55vw">✓✓ DUPLO SIM</span></div>
+          <div class="pc-dx" style="font-size:.62vw">NSCLC — Adenocarcinoma, EGFR+</div>
+          <div class="pc-trial" style="font-size:.55vw">NCT05631041 · Osimertinibe + quimio</div>
+          <div class="pc-crits" style="margin-top:.4vh;gap:.3vw">
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">NSCLC ✓</span>
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">EGFR+ ✓</span>
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">Sem metástase SNC ✓</span>
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">Função renal ok ✓</span>
+          </div>
+          <div class="pc-ai-text" style="font-size:.56vw;margin-top:.4vh;padding:.4vh .6vw">"Adenocarcinoma pulmonar EGFR+ (del19) confirmado em 01/2025, sem metástases de SNC em TC de 03/2026, ClCr 82 mL/min. Elegível para braço osimertinibe + pemetrexede."</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Match Parcial — IA contrapõe -->
+    <div class="mk-panel" style="box-shadow:0 .4vh 2vw rgba(217,119,6,.12)">
+      <div class="mk-head" style="background:#d97706;padding:.6vh 1vw;font-size:.62vw;color:#fff">✓✗ PARCIAL — IA contrapõe ou sinaliza pendência</div>
+      <div class="mk-body" style="padding:1vh 1.2vw">
+        <div class="pc pc-partial" style="padding:.8vh 1vw">
+          <div class="pc-row"><span class="pc-name" style="font-size:.78vw">J.A.L., 54a, M</span><span class="pc-badge bg-amber" style="font-size:.55vw">✓✗ PARCIAL</span></div>
+          <div class="pc-dx" style="font-size:.62vw">Melanoma metastático — estádio IV</div>
+          <div class="pc-trial" style="font-size:.55vw">NCT06127381 · Anti-PD1 + LAG3</div>
+          <div class="pc-crits" style="margin-top:.4vh;gap:.3vw">
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">Melanoma ✓</span>
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">Metastático ✓</span>
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">ECOG ≤1 ✓</span>
+            <span class="pc-crit no" style="font-size:.52vw;padding:.15vh .35vw">⚠ PD-L1 pendente</span>
+          </div>
+          <div class="pc-ai-text" style="font-size:.56vw;margin-top:.4vh;padding:.4vh .6vw;background:#fffbeb">"Match parcial: dx e estadiamento confirmados, ECOG 1. Resultado de PD-L1 (SP142) não encontrado no prontuário. <strong>Recomenda-se solicitação antes de confirmar elegibilidade.</strong>"</div>
+        </div>
+        <div class="pc pc-partial" style="padding:.8vh 1vw">
+          <div class="pc-row"><span class="pc-name" style="font-size:.78vw">L.M.P., 48a, F</span><span class="pc-badge bg-amber" style="font-size:.55vw">✓✗ PARCIAL</span></div>
+          <div class="pc-dx" style="font-size:.62vw">Câncer de mama triplo-negativo</div>
+          <div class="pc-trial" style="font-size:.55vw">NCT05307705 · Sacituzumabe govitecana</div>
+          <div class="pc-crits" style="margin-top:.4vh;gap:.3vw">
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">TNBC ✓</span>
+            <span class="pc-crit ok" style="font-size:.52vw;padding:.15vh .35vw">≥1 linha prévia ✓</span>
+            <span class="pc-crit no" style="font-size:.52vw;padding:.15vh .35vw">⚠ Biópsia pendente</span>
+            <span class="pc-crit no" style="font-size:.52vw;padding:.15vh .35vw">⚠ Trop-2 não avaliado</span>
+          </div>
+          <div class="pc-ai-text" style="font-size:.56vw;margin-top:.4vh;padding:.4vh .6vw;background:#fffbeb">"Dx TNBC confirmado, progressão após paclitaxel + carbo. <strong>Biópsia recente pendente e expressão de Trop-2 não avaliada.</strong> Aguardar resultados para confirmar elegibilidade."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="f" style="text-align:center;margin-top:1.5vh">
+    <p style="font-size:.95vw;color:#555;line-height:1.6">A IA não só confirma — ela <strong class="grn">explica por que sim</strong> e <strong class="amb">sinaliza quando falta algo</strong>.<br>Pacientes com <strong>duplo sim</strong> vão direto pro app como prioridade máxima.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 6d · APP HUMANO + MÉDICO + CONTATO
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="8">
+  <div class="f s6-head">
+    <p class="tag">Passo 3 · Avaliação humana · Processo contínuo</p>
+    <h2>📱 Humanos avaliam. <span class="grn">Médicos confirmam.</span></h2>
+  </div>
+
+  <div class="f pipeline-tl" style="margin-top:1vh">
+    <div class="pt-step done"><div class="pt-icon">🕐</div><div class="pt-label">02:00 AM</div></div>
+    <div class="pt-line done"></div>
+    <div class="pt-step done"><div class="pt-icon">🔍</div><div class="pt-label">Match</div></div>
+    <div class="pt-line done"></div>
+    <div class="pt-step done"><div class="pt-icon">🧠</div><div class="pt-label">IA</div></div>
+    <div class="pt-line done"></div>
+    <div class="pt-step current"><div class="pt-icon">📱</div><div class="pt-label">App Humano<br>Duplo sim primeiro</div></div>
+    <div class="pt-line done"></div>
+    <div class="pt-step current"><div class="pt-icon">👨‍⚕️</div><div class="pt-label">Médico<br>Confirma</div></div>
+    <div class="pt-line done"></div>
+    <div class="pt-step current"><div class="pt-icon">📞</div><div class="pt-label">Contato<br>Paciente</div></div>
+  </div>
+
+  <div class="f" style="display:grid;grid-template-columns:1fr .15fr 1fr .15fr 1fr;gap:0;width:100%;margin-top:2vh;align-items:start">
+    <!-- Fila App -->
+    <div class="mk-panel" style="box-shadow:0 .4vh 2vw rgba(37,99,235,.1)">
+      <div class="mk-head h-blue" style="padding:.7vh 1vw;font-size:.62vw">📱 App · Fila de Avaliação</div>
+      <div class="mk-body" style="padding:.8vh .8vw">
+        <p style="font-size:.5vw;font-weight:700;color:#00a868;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3vh">Prioridade: Duplo Sim</p>
+        <div class="qi qi-priority" style="padding:.6vh .5vw">
+          <span class="qi-pos" style="font-size:.85vw">1</span>
+          <div class="qi-info"><span class="qi-name" style="font-size:.62vw">M.S.R. · LLC</span><span class="qi-tag tg-green" style="font-size:.48vw">Duplo ✓✓</span></div>
+          <span class="qi-st" style="font-size:.48vw">Aguardando<br>recrutador</span>
+        </div>
+        <div class="qi qi-priority" style="padding:.6vh .5vw">
+          <span class="qi-pos" style="font-size:.85vw">2</span>
+          <div class="qi-info"><span class="qi-name" style="font-size:.62vw">A.C.F. · NSCLC</span><span class="qi-tag tg-green" style="font-size:.48vw">Duplo ✓✓</span></div>
+          <span class="qi-st" style="font-size:.48vw">Aguardando<br>recrutador</span>
+        </div>
+        <div style="height:1px;background:#e5e7eb;margin:.4vh 0"></div>
+        <p style="font-size:.5vw;font-weight:700;color:#d97706;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3vh">Parcial · Aguardando exames</p>
+        <div class="qi" style="padding:.6vh .5vw">
+          <span class="qi-pos" style="font-size:.85vw;color:#d97706">3</span>
+          <div class="qi-info"><span class="qi-name" style="font-size:.62vw">J.A.L. · Melanoma</span><span class="qi-tag tg-amber" style="font-size:.48vw">Parcial ✓✗</span></div>
+          <span class="qi-st" style="font-size:.48vw">PD-L1<br>pendente</span>
+        </div>
+        <div class="qi" style="padding:.6vh .5vw">
+          <span class="qi-pos" style="font-size:.85vw;color:#d97706">4</span>
+          <div class="qi-info"><span class="qi-name" style="font-size:.62vw">L.M.P. · Mama</span><span class="qi-tag tg-amber" style="font-size:.48vw">Parcial ✓✗</span></div>
+          <span class="qi-st" style="font-size:.48vw">Biópsia<br>pendente</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-arrow-col">→</div>
+
+    <!-- Médico confirma -->
+    <div class="mk-panel" style="box-shadow:0 .4vh 2vw rgba(0,168,104,.1)">
+      <div class="mk-head h-green" style="padding:.7vh 1vw;font-size:.62vw">👨‍⚕️ Médico · Confirmação de Elegibilidade</div>
+      <div class="mk-body" style="padding:.8vh .8vw">
+        <div class="qi" style="padding:.6vh .5vw;background:#f0faf5">
+          <span class="qi-pos" style="font-size:.85vw">✓</span>
+          <div class="qi-info">
+            <span class="qi-name" style="font-size:.62vw">M.S.R. · LLC · NCT05839132</span>
+            <span class="qi-tag tg-green" style="font-size:.48vw">Recrutador aprovou</span>
+          </div>
+          <span class="qi-st" style="font-size:.48vw;color:#00a868;font-weight:700">Médico<br>Confirmou ✓</span>
+        </div>
+        <div class="qi" style="padding:.6vh .5vw;background:#f0faf5">
+          <span class="qi-pos" style="font-size:.85vw">✓</span>
+          <div class="qi-info">
+            <span class="qi-name" style="font-size:.62vw">A.C.F. · NSCLC · NCT05631041</span>
+            <span class="qi-tag tg-green" style="font-size:.48vw">Recrutador aprovou</span>
+          </div>
+          <span class="qi-st" style="font-size:.48vw;color:#00a868;font-weight:700">Aguardando<br>médico</span>
+        </div>
+        <div style="height:1px;background:#e5e7eb;margin:.4vh 0"></div>
+        <p style="font-size:.55vw;color:#777;line-height:1.5;padding:.3vh .5vw">O médico recebe o resumo da IA + avaliação do recrutador. Confirma ou rejeita com justificativa clínica.</p>
+      </div>
+    </div>
+
+    <div class="flow-arrow-col">→</div>
+
+    <!-- Contato -->
+    <div class="mk-panel" style="box-shadow:0 .4vh 2vw rgba(37,99,235,.1)">
+      <div class="mk-head" style="background:#059669;padding:.7vh 1vw;font-size:.62vw;color:#fff">📞 Contato · Paciente Informado</div>
+      <div class="mk-body" style="padding:.8vh .8vw">
+        <div class="qi qi-done" style="padding:.6vh .5vw;opacity:1">
+          <span class="qi-pos" style="font-size:.85vw;color:#059669">✓</span>
+          <div class="qi-info">
+            <span class="qi-name" style="font-size:.62vw">R.P.S. · Mama HER2+</span>
+            <span class="qi-tag" style="font-size:.48vw;background:#dcfce7;color:#059669">Contatado 27/04</span>
+          </div>
+        </div>
+        <div class="qi qi-done" style="padding:.6vh .5vw;opacity:1">
+          <span class="qi-pos" style="font-size:.85vw;color:#059669">✓</span>
+          <div class="qi-info">
+            <span class="qi-name" style="font-size:.62vw">C.E.N. · Próstata mCRPC</span>
+            <span class="qi-tag" style="font-size:.48vw;background:#dcfce7;color:#059669">Contatado 26/04</span>
+          </div>
+        </div>
+        <div class="qi qi-done" style="padding:.6vh .5vw;opacity:1">
+          <span class="qi-pos" style="font-size:.85vw;color:#059669">✓</span>
+          <div class="qi-info">
+            <span class="qi-name" style="font-size:.62vw">F.G.M. · Pulmão KRAS+</span>
+            <span class="qi-tag" style="font-size:.48vw;background:#dcfce7;color:#059669">Contatado 25/04</span>
+          </div>
+        </div>
+        <div style="height:1px;background:#e5e7eb;margin:.4vh 0"></div>
+        <p style="font-size:.55vw;color:#777;line-height:1.5;padding:.3vh .5vw">Paciente é informado, consulta de screening agendada. <strong>O ciclo recomeça todo dia às 2h.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="f" style="text-align:center;margin-top:2vh">
+    <p style="font-size:1.1vw;font-weight:600;color:#111;line-height:1.6">IA parseia → Match determinístico → IA descreve → Humanos avaliam → Médico confirma → Contato</p>
+    <p style="font-size:.85vw;color:#00a868;margin-top:.6vh;font-weight:700">Processo contínuo. Todo dia. Nenhum paciente escorrega.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 9 · HAPVIDA EM NÚMEROS
+     Narrativa: resultados concretos, impacto real
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="9">
+  <div class="f" style="text-align:center">
+    <p class="tag">Resultados · Hapvida</p>
+    <h2 style="font-size:3.2vw;font-weight:800;line-height:1.08;letter-spacing:-.02em">Os números da <span class="grn">nossa operação</span></h2>
+  </div>
+
+  <div class="f" style="display:grid;grid-template-columns:1fr 1fr;gap:4vw;width:100%;margin-top:3vh">
+    <div style="text-align:center;padding:4vh 2vw;border-radius:.8vw;background:#f0faf5;border:2px solid #c6e7d8">
+      <p style="font-size:8vw;font-weight:900;line-height:1;letter-spacing:-.05em;color:#00a868">170</p>
+      <p style="font-size:1.4vw;font-weight:700;color:#111;margin-top:1.5vh;line-height:1.4">pacientes elegíveis<br>para estudos em 2026</p>
+      <p style="font-size:.75vw;color:#888;margin-top:.8vh">identificados pela plataforma Hapvida</p>
+    </div>
+    <div style="text-align:center;padding:4vh 2vw;border-radius:.8vw;background:#fffbeb;border:2px solid #fde68a">
+      <p style="font-size:8vw;font-weight:900;line-height:1;letter-spacing:-.05em;color:#d97706">400+</p>
+      <p style="font-size:1.4vw;font-weight:700;color:#111;margin-top:1.5vh;line-height:1.4">pacientes aguardando<br>resultado de exames</p>
+      <p style="font-size:.75vw;color:#888;margin-top:.8vh">elegibilidade sendo avaliada · 2026</p>
+    </div>
+  </div>
+
+  <div class="f" style="text-align:center;margin-top:3.5vh">
+    <p style="font-size:1.05vw;color:#555;line-height:1.7">Maior base <strong>OMOP</strong> de saúde suplementar da América Latina. Cada exame que chega pode mudar o status de elegibilidade — <strong>em tempo real.</strong></p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 10 · O FUTURO JÁ COMEÇOU
+     Narrativa: Digital Twins + Synthetic Controls + Federated + 18 meses
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="10">
+  <div class="f s7-head">
+    <p class="tag">Módulo 4 · Além do recrutamento</p>
+    <h2>O futuro já começou</h2>
+  </div>
+
+  <div class="horizon">
+    <div class="f hcard" style="border-left-color:#00a868">
+      <span class="icon">🪞</span>
+      <h3>Gêmeos Digitais</h3>
+      <div class="bar" style="background:#00a868"></div>
+      <p>Réplicas virtuais de pacientes. O <strong>FDA já reconhece como evidência complementar</strong>. Simulam resposta antes de recrutar.</p>
+      <p class="note">Warraich, JAMA, 2025 [6] · Moingeon, 2023 [7] · Pammi, Lancet, 2025 [8]</p>
+    </div>
+    <div class="f hcard" style="border-left-color:#2563eb">
+      <span class="icon">⚗️</span>
+      <h3>Controles Sintéticos</h3>
+      <div class="bar" style="background:#2563eb"></div>
+      <p>Substituir placebo com dados reais. <strong>Cerliponase alfa</strong>: aprovada pelo FDA sem placebo. Braço único. 100% RWD.</p>
+      <p class="note">Zannad et al., JACC, 2026 [9]</p>
+    </div>
+    <div class="f hcard" style="border-left-color:#7c3aed">
+      <span class="icon">🔐</span>
+      <h3>Federated Learning</h3>
+      <div class="bar" style="background:#7c3aed"></div>
+      <p>Treinar modelos <strong>sem mover dados</strong>. 99% da qualidade de modelos centralizados. GDPR-compliant by design.</p>
+      <p class="note">Sheller, Sci Rep, 2020 [14] · Brauneck, JMIR, 2023 [15]</p>
+    </div>
+  </div>
+
+  <div class="f s7-mega">
+    <p class="num">18 meses</p>
+    <p class="after">O modelo preditivo de amanhã vai identificar um candidato a ensaio<br><strong>18 meses antes dele ter sintomas.</strong></p>
+  </div>
+  <p class="ref">Khera et al., Transforming Cardiovascular Care With AI, JACC, 2024 [5]</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 11 · ENCERRAMENTO
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="11">
+  <div class="closing">
+    <p class="f quote">"O próximo grande estudo clínico<br>não vai ser atrasado por falta de pacientes.<br><br>Vai ser acelerado por<br><strong class="grn">dados que já existem</strong>."</p>
+
+    <div class="f profile">
+      <div class="left">
+        <img src="img/victor.png" alt="Victor Marchetti" class="avatar">
+        <div class="name">Victor Hugo Ovani Marchetti</div>
+        <div class="role">Médico · Mestrando em Saúde Pública<br>LABDAPS / USP · Ciência de Dados · Hapvida</div>
+        <div class="links">
+          <a href="https://victorovanimarchetti.com">🌐 victorovanimarchetti.com</a>
+          <a href="https://linkedin.com/in/victorovanimarchetti">in LinkedIn</a>
+        </div>
+        <div class="logos">
+          <img src="img/labdaps.png" alt="LABDAPS">
+          <img src="img/hapvida-logo.png" alt="Hapvida">
+        </div>
+      </div>
+      <div class="right" style="gap:1.2vh">
+        <h3>Obrigado!</h3>
+        <div style="display:flex;gap:2.5vw;align-items:flex-start">
+          <div style="text-align:center">
+            <p class="ask" style="font-size:.6vw;margin-bottom:.4vh">Apresentação interativa</p>
+            <img id="qr-interact" src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=https://victorovanimarchetti.com/slide/&bgcolor=ffffff&color=00a868" alt="QR Interativo" width="130" height="130" style="border-radius:.4vw;border:2px solid #e5e7eb">
+            <p class="url" style="font-size:.48vw;color:#00a868;font-weight:600;margin-top:.3vh">victorovanimarchetti.com/slide</p>
+          </div>
+          <div style="text-align:center">
+            <p class="ask" style="font-size:.6vw;margin-bottom:.4vh">Conteúdo + Referências</p>
+            <img id="qr-refs" src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=https://bit.ly/RWE360pdf&bgcolor=ffffff&color=2563eb" alt="QR PDF" width="130" height="130" style="border-radius:.4vw;border:2px solid #e5e7eb">
+            <p class="url" style="font-size:.48vw;color:#2563eb;font-weight:600;margin-top:.3vh">bit.ly/RWE360pdf</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* ─── Slide Engine ─── */
+const S=document.querySelectorAll('.s'),N=S.length;
+let c=0;
+
+function go(n){
+  if(n<0||n>=N)return;
+  S[c].classList.remove('on');c=n;
+  S[c].classList.add('on');
+  S[c].querySelectorAll('.f').forEach(f=>f.classList.remove('v'));
+  document.getElementById('prog').style.width=((c+1)/N*100)+'%';
+  upN();
+  try{localStorage.setItem('slide_current',String(c))}catch(e){}
+}
+
+function next(){
+  const fr=S[c].querySelectorAll('.f:not(.v)');
+  if(fr.length){fr[0].classList.add('v');return}
+  go(c+1);
+}
+
+S[0].classList.add('on');
+document.getElementById('prog').style.width=(1/N*100)+'%';
+try{localStorage.setItem('slide_current','0')}catch(e){}
+
+/* ─── Loss Counter: US$8M/day = US$92.59/sec ─── */
+const _lossStart=Date.now(),_lossRate=8000000/86400;
+function _fmtUSD(v){return'US$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function _fmtBRL(v){return'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function _updLoss(){
+  const s=(Date.now()-_lossStart)/1000,usd=s*_lossRate,brl=usd*5.7;
+  const t=_fmtUSD(usd)+' / '+_fmtBRL(brl);
+  const f=document.getElementById('loss-fixed');
+  if(f)f.textContent=t;
+}
+setInterval(_updLoss,100);_updLoss();
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next()}
+  else if(e.key==='ArrowLeft'){e.preventDefault();go(c-1)}
+  else if(e.key.toLowerCase()==='n')document.getElementById('nd').classList.toggle('open');
+  else if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+});
+
+let tx=0;
+document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
+document.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50){d<0?next():go(c-1)}});
+
+
+/* ─── Speaker Notes ─── */
+const notes={
+0:`<h4>SLIDE 1 — Abertura + Números (3 min)</h4>
+<p>[ESPAÇO] "Boa noite! Eu sou Victor Marchetti, médico, mestrando em Saúde Pública na USP."</p>
+<p>[ESPAÇO] "Olhem esses números. Metade dos estudos falham no recrutamento. Cada dia de atraso: 8 milhões de dólares."</p>
+<p>[ESPAÇO] "260 estudos encerrados prematuramente em um único centro. Custo: quase um milhão de dólares desperdiçado. E se o gargalo não fosse a ciência, mas encontrar as pessoas certas na hora certa?"</p>
+<p>Refs: Treweek 2018 [1], Houghton 2020 [2], Darden 2022 [3], Brøgger-Mikkelsen 2020 [4]</p>`,
+
+1:`<h4>SLIDE 2 — Duas Forças da IA (3 min)</h4>
+<p>[ESPAÇO] "Antes de falar de solução, vocês precisam entender as duas forças da IA que vão mudar pesquisa clínica."</p>
+<p>[ESPAÇO] "IA Generativa: é a força que TRANSFORMA. Lê prontuários inteiros em segundos, extrai dados estruturados, gera sumários."</p>
+<p>[ESPAÇO] "IA Preditiva: é a força que PREVÊ. Modelos que aprendem trajetórias — quem vai desenvolver, quem vai responder."</p>
+<p>[ESPAÇO] "O futuro da medicina não é tratar doenças, é tratar trajetórias." Khera et al., JACC, 2024 [5].</p>`,
+
+2:`<h4>SLIDE 3 — Garbage In, Garbage Out (3 min)</h4>
+<p>[ESPAÇO] "Mas tem um problema. 80% dos dados clínicos estão em texto livre. Garbage in, garbage out."</p>
+<p>[ESPAÇO] "Três pilares: OMOP-CDM, SNOMED CT, AI Scribe."</p>
+<p>[ESPAÇO] "Sem OMOP, não escala multicêntrico. Com OMOP, você conecta Hapvida a qualquer rede global."</p>`,
+
+3:`<h4>SLIDE 4 — Milhões de Vidas (1 min)</h4>
+<p>[ESPAÇO] Pausa dramática. "MILHÕES de vidas na base."</p>
+<p>[ESPAÇO] "A gente sabe o que fazer."</p>`,
+
+4:`<h4>SLIDE 5 — Como o Mundo Está Fazendo (3 min)</h4>
+<p>[ESPAÇO] "O pipeline que Stanford, NIH, MSKCC e Europa já validaram."</p>
+<p>[ESPAÇO] "RECTIFIER com GPT-4: 98-100% concordância. Dez centavos por paciente."</p>
+<p>"Gong no JCO: 98 mil triados, 10× menos revisão manual."</p>`,
+
+5:`<h4>SLIDE 6 — Visão Geral do Pipeline (2 min)</h4>
+<p>[ESPAÇO] "Agora como a gente faz. Esse é o pipeline completo."</p>
+<p>[ESPAÇO] "Três fases: automática, inteligente e humana."</p>
+<p>"Todo dia às 2h, automático. A IA parseia e descreve. Humanos avaliam e confirmam. Processo contínuo."</p>
+<p>[ESPAÇO] "Vou detalhar cada passo nos próximos slides."</p>`,
+
+6:`<h4>SLIDE 7 — 02:00 AM · Coleta + Match (2 min)</h4>
+<p>[ESPAÇO] "Às 2h da manhã, o sistema acorda. Coleta todas as consultas do dia anterior + pacientes de centros estratégicos dos próximos 7 dias."</p>
+<p>"Ontem: 847 consultas, 1.203 pacientes de centros estratégicos."</p>
+<p>[ESPAÇO] "Faz match determinístico com os critérios. Resultado: 23 pacientes com match completo, 9 parciais."</p>
+<p>"De 2.050 prontuários, 23 passam. Esses agora vão pra IA."</p>`,
+
+7:`<h4>SLIDE 8 — IA Descreve e Contrapõe (3 min)</h4>
+<p>[ESPAÇO] "Aqui é o coração do sistema. A IA lê o prontuário inteiro de cada um dos 23 pacientes."</p>
+<p>[ESPAÇO] "Lado esquerdo, duplo sim: M.S.R., 67 anos, LLC. A IA checou cada critério — diagnóstico, BTKi prévio, ECOG, função hepática — e escreveu: 'preenche todos os critérios'. Duplo sim."</p>
+<p>"A.C.F., 71 anos, NSCLC EGFR+. Mesma coisa: a IA confirma e explica por que sim."</p>
+<p>[ESPAÇO] "Lado direito, a IA CONTRAPÕE. J.A.L., melanoma: falta o PD-L1. A IA sinaliza e recomenda solicitar o exame."</p>
+<p>"L.M.P., mama triplo-negativo: biópsia pendente e Trop-2 não avaliado. A IA diz: 'aguardar resultados'."</p>
+<p>"A IA não é um carimbo automático. Ela explica quando sim e sinaliza quando falta algo."</p>`,
+
+8:`<h4>SLIDE 9 — App + Médico + Contato (2 min)</h4>
+<p>[ESPAÇO] "Aí vai pro app, pros humanos."</p>
+<p>[ESPAÇO] "Vejam a fila: duplo sim em cima, prioridade máxima. M.S.R. e A.C.F. primeiro."</p>
+<p>"Parciais embaixo, esperando exame. J.A.L. esperando PD-L1, L.M.P. esperando biópsia."</p>
+<p>[ESPAÇO] "O recrutador avalia, o médico recebe o resumo da IA + avaliação do recrutador e confirma."</p>
+<p>"Paciente contatado, screening agendado. Vejam ali: R.P.S. contatado dia 27, C.E.N. dia 26."</p>
+<p>"E o ciclo recomeça todo dia às 2h. Processo contínuo. Nenhum paciente escorrega."</p>`,
+
+9:`<h4>SLIDE 10 — Hapvida em Números (1 min)</h4>
+<p>[ESPAÇO] "Os números são nossos, de 2026, reais."</p>
+<p>"170 pacientes elegíveis identificados. 400+ aguardando resultado de exame."</p>
+<p>"Cada exame que chega reavalia elegibilidade em tempo real."</p>`,
+
+10:`<h4>SLIDE 11 — O Futuro Já Começou (2 min)</h4>
+<p>[ESPAÇO] "E para onde estamos indo?"</p>
+<p>[ESPAÇO] "Gêmeos digitais, controles sintéticos, federated learning."</p>
+<p>[ESPAÇO] "18 meses. O modelo preditivo de amanhã vai identificar um candidato 18 meses antes dos sintomas."</p>`,
+
+11:`<h4>SLIDE 12 — Encerramento (1 min)</h4>
+<p>[ESPAÇO] Pausa longa. Ler devagar:</p>
+<p>"O próximo grande estudo clínico... não vai ser atrasado por falta de pacientes. Vai ser acelerado... por dados... que já existem."</p>
+<p>[ESPAÇO] "Meu contato está aqui. Muito obrigado."</p>`
+};
+
+function upN(){document.getElementById('nd').innerHTML=notes[c]||''}
+upN();
+</script>
+</body>
+</html>

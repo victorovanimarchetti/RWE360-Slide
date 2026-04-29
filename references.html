@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Como Escalar Estudos Clínicos com IA — Documento Completo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+@media print {
+  @page { margin: 1.8cm 2cm; size: A4; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .no-print { display: none !important; }
+  .page-break { page-break-before: always; }
+  a { color: #2563eb !important; }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { font-family: 'Inter', sans-serif; background: #fff; color: #222; font-size: 14px; line-height: 1.7; }
+
+.container { max-width: 780px; margin: 0 auto; padding: 40px 32px; }
+
+/* ─── Cover ─── */
+.cover { text-align: center; padding: 48px 0 40px; border-bottom: 3px solid #00a868; margin-bottom: 32px; }
+.cover .tag { font-size: 11px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: #00a868; margin-bottom: 12px; }
+.cover h1 { font-size: 26px; font-weight: 900; line-height: 1.25; color: #111; margin-bottom: 10px; }
+.cover .author { font-size: 14px; color: #555; font-weight: 400; line-height: 1.6; }
+.cover .author strong { font-weight: 700; color: #111; }
+
+.qr-row { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 28px 0 0; padding: 18px 24px; background: #f8fdfb; border: 1px solid #d1e7dd; border-radius: 10px; }
+.qr-row img { border-radius: 6px; flex-shrink: 0; }
+.qr-row .info { text-align: left; }
+.qr-row .info .lbl { font-size: 11px; font-weight: 700; color: #00a868; text-transform: uppercase; letter-spacing: .12em; }
+.qr-row .info .url { font-size: 16px; font-weight: 700; color: #111; margin-top: 2px; }
+.qr-row .info .desc { font-size: 11px; color: #888; margin-top: 4px; line-height: 1.5; }
+
+/* ─── Section headings ─── */
+.section { margin-top: 36px; }
+.section-tag { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #00a868; margin-bottom: 6px; }
+.section h2 { font-size: 20px; font-weight: 800; color: #111; line-height: 1.25; margin-bottom: 4px; }
+.section h3 { font-size: 15px; font-weight: 700; color: #333; margin-top: 18px; margin-bottom: 4px; }
+.section h3 .ico { margin-right: 6px; }
+.section p, .section li { font-size: 13px; line-height: 1.7; color: #444; }
+.section p + p { margin-top: 8px; }
+.section ul { padding-left: 20px; margin-top: 6px; }
+.section li { margin-bottom: 4px; }
+
+/* ─── Highlight boxes ─── */
+.stat-row { display: flex; gap: 16px; margin: 14px 0; }
+.stat-box { flex: 1; text-align: center; padding: 14px 12px; border-radius: 8px; }
+.stat-box .val { font-size: 32px; font-weight: 900; line-height: 1; letter-spacing: -.02em; }
+.stat-box .lbl { font-size: 11px; color: #555; margin-top: 6px; line-height: 1.35; }
+.stat-box.green { background: #f0faf5; border: 1px solid #c6e7d8; }
+.stat-box.green .val { color: #00a868; }
+.stat-box.red { background: #fef2f2; border: 1px solid #fecaca; }
+.stat-box.red .val { color: #dc2626; }
+.stat-box.amber { background: #fffbeb; border: 1px solid #fde68a; }
+.stat-box.amber .val { color: #d97706; }
+.stat-box.blue { background: #eff6ff; border: 1px solid #bfdbfe; }
+.stat-box.blue .val { color: #2563eb; }
+.stat-box.purple { background: #f5f3ff; border: 1px solid #ddd6fe; }
+.stat-box.purple .val { color: #7c3aed; }
+
+.quote-block { margin: 16px 0; padding: 14px 20px; border-left: 4px solid #00a868; background: #f8fdfb; border-radius: 0 8px 8px 0; }
+.quote-block p { font-size: 14px; font-style: italic; color: #333; line-height: 1.6; }
+.quote-block cite { font-size: 11px; color: #999; font-style: normal; display: block; margin-top: 4px; }
+
+.evidence-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+.ev { padding: 12px 14px; border-radius: 8px; background: #fafafa; border: 1px solid #eee; }
+.ev .val { font-size: 22px; font-weight: 900; line-height: 1.1; }
+.ev .desc { font-size: 11px; color: #666; margin-top: 4px; line-height: 1.4; }
+.ev .src { font-size: 10px; color: #bbb; margin-top: 4px; }
+
+.pipeline-box { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; margin: 16px 0; padding: 14px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e5e7eb; }
+.pipe-step { padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; text-align: center; background: #fff; border: 1px solid #e0e0e0; }
+.pipe-step.ai { background: #f0faf5; border-color: #c6e7d8; color: #00a868; }
+.pipe-arr { color: #bbb; font-size: 14px; }
+
+.pillar-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 14px 0; }
+.pillar-card { padding: 14px; border-radius: 8px; border-left: 4px solid; }
+.pillar-card h4 { font-size: 13px; font-weight: 800; margin-bottom: 4px; }
+.pillar-card p { font-size: 12px; line-height: 1.55; }
+.pillar-card .note { font-size: 10px; color: #aaa; margin-top: 4px; }
+
+.ref-inline { font-size: 11px; color: #2563eb; font-weight: 600; cursor: pointer; }
+
+/* ─── Separator ─── */
+hr.sep { border: none; height: 1px; background: #eee; margin: 32px 0; }
+
+/* ─── References ─── */
+.ref-section { margin-top: 36px; }
+.ref-section h2 { font-size: 18px; font-weight: 800; color: #111; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid #00a868; }
+.ref-list { list-style: none; counter-reset: ref; }
+.ref-item { counter-increment: ref; padding: 8px 0 8px 34px; border-bottom: 1px solid #f5f5f5; position: relative; font-size: 11.5px; line-height: 1.6; color: #333; }
+.ref-item:last-child { border-bottom: none; }
+.ref-item::before { content: "[" counter(ref) "]"; position: absolute; left: 0; top: 8px; font-weight: 800; color: #00a868; font-size: 11px; width: 28px; text-align: right; }
+.ref-item .authors { color: #444; }
+.ref-item .title { font-weight: 600; color: #111; }
+.ref-item .journal { font-style: italic; color: #666; }
+.ref-item a { color: #2563eb; text-decoration: none; font-size: 10.5px; word-break: break-all; }
+.ref-item a:hover { text-decoration: underline; }
+
+/* ─── Footer ─── */
+.footer { text-align: center; margin-top: 28px; padding-top: 16px; border-top: 2px solid #f0f0f0; }
+.footer p { font-size: 11px; color: #aaa; line-height: 1.6; }
+.footer .name { font-weight: 700; color: #555; font-size: 12px; }
+
+/* ─── Print button ─── */
+.print-btn { position: fixed; bottom: 24px; right: 24px; background: #00a868; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 16px rgba(0,168,104,.3); z-index: 100; }
+.print-btn:hover { background: #008f5a; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       COVER PAGE
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="cover">
+    <p class="tag">RWE 360° · Abril 2026</p>
+    <h1>Como Escalar Estudos Clínicos e de Vida Real<br>com Recrutamento Através de Inteligência Artificial</h1>
+    <p class="author"><strong>Victor Hugo Ovani Marchetti</strong><br>Médico · Mestrando em Saúde Pública · LABDAPS/USP · Hapvida</p>
+    <div class="no-print" style="margin-top:20px;padding:14px 20px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;text-align:center">
+      <p style="font-size:11px;color:#999;margin-bottom:4px">Desde que você abriu esta página, a indústria perdeu</p>
+      <p id="loss-web" style="font-size:28px;font-weight:900;color:#dc2626;font-variant-numeric:tabular-nums;letter-spacing:-.02em">US$ 0</p>
+      <p style="font-size:11px;color:#999;margin-top:4px">por falhas no recrutamento clínico (US$ 8M/dia)</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       O PROBLEMA CENTRAL
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <p class="section-tag">Abertura</p>
+    <h2>A Ciência Avança. O Recrutamento Trava.</h2>
+
+    <p>Apenas <strong>31–50% dos estudos clínicos atingem suas metas de recrutamento no prazo original</strong> <a href="#ref1" class="ref-inline">[1]</a>. Mais de 53% precisam de extensões de tempo, e 25% são abandonados prematuramente devido a problemas de recrutamento <a href="#ref2" class="ref-inline">[2]</a><a href="#ref3" class="ref-inline">[3]</a>. Para empresas farmacêuticas, esses atrasos custam até <strong>US$ 8 milhões por dia</strong> em receita perdida <a href="#ref4" class="ref-inline">[4]</a>.</p>
+
+    <p>Um único centro médico nos EUA identificou 260 estudos encerrados prematuramente (0–1 paciente recrutado) em cinco anos, com custo de quase <strong>US$ 1 milhão</strong> <a href="#ref2" class="ref-inline">[2]</a>.</p>
+
+    <div class="stat-row">
+      <div class="stat-box red">
+        <div class="val">50%</div>
+        <div class="lbl">dos estudos falham<br>no recrutamento</div>
+      </div>
+      <div class="stat-box amber">
+        <div class="val">US$8M</div>
+        <div class="lbl">custo por dia<br>de atraso</div>
+      </div>
+      <div class="stat-box green">
+        <div class="val">260</div>
+        <div class="lbl">estudos encerrados<br>em um único centro</div>
+      </div>
+    </div>
+
+    <div class="quote-block">
+      <p>E se o maior gargalo da pesquisa clínica não fosse a ciência, mas encontrar as pessoas certas, na hora certa?</p>
+    </div>
+  </div>
+
+  <hr class="sep">
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BLOCO 1 — DUAS FORÇAS DA IA
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <p class="section-tag">Módulo 1 · Entendendo a IA</p>
+    <h2>Duas Forças. Dois Superpoderes.</h2>
+
+    <h3><span class="ico">🧠</span>IA Generativa</h3>
+    <p>Transforma e <strong>automatiza processos manuais</strong>. LLMs (Large Language Models) leem prontuários inteiros, extraem dados estruturados, geram sumários clínicos — e fazem triagem em linguagem natural. Exemplos: GPT-4, LLaMA, Claude, NER clínico, AI Scribe, sumarização de prontuário.</p>
+    <p><strong>Alerta:</strong> não é para tomar decisão clínica sozinha.</p>
+
+    <h3><span class="ico">📈</span>IA Preditiva</h3>
+    <p>Modelos que aprendem padrões em dados longitudinais para antecipar quem vai <strong>desenvolver uma condição, responder a um tratamento ou abandonar</strong> um estudo. O coração da medicina de precisão.</p>
+
+    <p><strong>Conexão com medicina de precisão:</strong> Modelos preditivos integram dados ômicos, wearables e prontuários longitudinais — o modelo preditivo de amanhã vai saber que um paciente é candidato a um ensaio <strong>18 meses antes de ele ter sintomas</strong> <a href="#ref5" class="ref-inline">[5]</a>.</p>
+
+    <div class="quote-block">
+      <p>"O futuro da medicina não é tratar doenças — é tratar <strong>trajetórias</strong>."</p>
+      <cite>Khera et al., JACC, 2024 [5]</cite>
+    </div>
+  </div>
+
+  <hr class="sep">
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BLOCO 2 — IA EM RWE: ALÉM DO ÓBVIO
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <p class="section-tag">Módulo 2 · IA em RWE e Pesquisa Clínica</p>
+    <h2>Além do Óbvio</h2>
+
+    <h3><span class="ico">🪞</span>Digital Twins — Gêmeos Digitais</h3>
+    <p>Réplicas virtuais de pacientes construídas a partir de dados de prontuário, imagem, laboratório e comportamento. Aplicação direta: <strong>simular a resposta de um paciente a um protocolo antes de recrutá-lo</strong> <a href="#ref6" class="ref-inline">[6]</a><a href="#ref7" class="ref-inline">[7]</a><a href="#ref8" class="ref-inline">[8]</a>.</p>
+    <p>O FDA já reconhece digital twins como ferramenta para gerar registros clínicos simulados e prever resposta do grupo placebo. Projetos do FDA e EMA reconhecem digital twins como evidência complementar.</p>
+
+    <h3><span class="ico">⚗️</span>Controles Sintéticos (Synthetic Control Arms)</h3>
+    <p>Substituto ou complemento ao braço controle em RCTs usando dados de RWD. <strong>Reduz o N necessário, acelera o estudo e resolve problemas éticos de placebo em doenças graves</strong> <a href="#ref9" class="ref-inline">[9]</a>.</p>
+    <p><strong>Exemplo real:</strong> O FDA aprovou cerliponase alfa para doença de Batten usando controles sintéticos em um estudo de braço único. O uso de controles externos e sintéticos pode reduzir significativamente o tamanho amostral e a exposição de pacientes ao placebo.</p>
+
+    <h3><span class="ico">🔍</span>Recrutamento Preditivo</h3>
+    <p>Modelos que cruzam dados de RWD (diagnósticos, prescrições, exames) com critérios de elegibilidade para rankear pacientes por probabilidade de qualificação e adesão.</p>
+
+    <div class="evidence-grid">
+      <div class="ev">
+        <div class="val" style="color:#00a868">98–100%</div>
+        <div class="desc">concordância com clínicos na triagem de elegibilidade (RECTIFIER, GPT-4)</div>
+        <div class="src">Cunningham et al., JACC, 2024 <a href="#ref11" class="ref-inline">[11]</a></div>
+      </div>
+      <div class="ev">
+        <div class="val" style="color:#d97706">US$0,10</div>
+        <div class="desc">custo por paciente triado vs. revisão manual tradicional</div>
+        <div class="src">Cunningham et al., JACC, 2024 <a href="#ref11" class="ref-inline">[11]</a></div>
+      </div>
+      <div class="ev">
+        <div class="val" style="color:#2563eb">92%</div>
+        <div class="desc">dos pacientes oncológicos com ≥1 estudo relevante nas top 20 recomendações</div>
+        <div class="src">Abdallah et al., Nat Commun, 2026 <a href="#ref12" class="ref-inline">[12]</a></div>
+      </div>
+      <div class="ev">
+        <div class="val" style="color:#7c3aed">-41%</div>
+        <div class="desc">tempo de triagem (3,1 → 1,8 min/prontuário); 98.348 pacientes triados, 117 inscritos</div>
+        <div class="src">Gong et al., JCO CCI, 2026 <a href="#ref13" class="ref-inline">[13]</a></div>
+      </div>
+    </div>
+
+    <p>Plataformas como Watson for Clinical Trial Matching, Deep 6 AI e Mendel.AI demonstram alta sensibilidade e especificidade para identificação de elegibilidade e reduzem significativamente o tempo necessário para identificar pacientes elegíveis <a href="#ref10" class="ref-inline">[10]</a>. O sistema TrialMatchAI alcançou >90% de acurácia na classificação de elegibilidade por critério <a href="#ref12" class="ref-inline">[12]</a>.</p>
+
+    <h3><span class="ico">🔐</span>Federated Learning e Privacidade</h3>
+    <p>Treinar modelos sem mover dados sensíveis. Estudos demonstram que <strong>modelos federados entre 10 instituições alcançam 99% da qualidade de modelos com dados centralizados</strong> <a href="#ref14" class="ref-inline">[14]</a>. Quando combinado com privacidade diferencial e SMPC, o federated learning <strong>satisfaz os requisitos legais do GDPR</strong> para pesquisa médica <a href="#ref15" class="ref-inline">[15]</a>.</p>
+  </div>
+
+  <hr class="sep">
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BLOCO 3 — INFRAESTRUTURA DE DADOS
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <p class="section-tag">Módulo 3 · O alicerce</p>
+    <h2>Garbage In, Garbage Out</h2>
+
+    <p><strong>"Qualquer modelo de IA é tão bom quanto os dados que o alimentam. E os dados clínicos são um caos."</strong> 80% dos dados clínicos estão em texto livre. Sem estruturação, nenhuma IA vai encontrar o paciente certo.</p>
+
+    <div class="pillar-grid">
+      <div class="pillar-card" style="border-color:#2563eb;background:#eff6ff">
+        <h4 style="color:#2563eb">🏗️ OMOP-CDM</h4>
+        <p>A Pedra de Roseta dos dados clínicos. <strong>331 fontes, 2.1 bilhões de registros, 34 países.</strong> 96–99% dos registros mapeados com sucesso.</p>
+        <p class="note">[16][17][18]</p>
+      </div>
+      <div class="pillar-card" style="border-color:#00a868;background:#f0faf5">
+        <h4 style="color:#00a868">🌐 SNOMED CT</h4>
+        <p><strong>10M+ conceitos, 136 vocabulários.</strong> "Infarto" em CID, texto livre e SNOMED são 3 coisas — SNOMED as unifica.</p>
+        <p class="note">[16][19]</p>
+      </div>
+      <div class="pillar-card" style="border-color:#7c3aed;background:#f5f3ff">
+        <h4 style="color:#7c3aed">🤖 AI Scribe</h4>
+        <p>LLMs com NER clínico transformam texto livre em <strong>dados estruturados e consultáveis</strong>.</p>
+        <p class="note">[10][20]</p>
+      </div>
+    </div>
+
+    <p>A rede OHDSI é a maior rede de dados distribuídos do mundo, abrangendo mais de 331 fontes de dados com 2,1 bilhões de registros em 34 países <a href="#ref16" class="ref-inline">[16]</a>. A transformação para OMOP resulta em perda mínima de informação: 96–99% dos registros de condições e 90–99% dos registros de medicamentos são mapeados com sucesso <a href="#ref17" class="ref-inline">[17]</a>. Estudo australiano converteu dados de 2,03 milhões de pacientes ativos para OMOP com 97% de taxa de aprovação em avaliações de qualidade <a href="#ref18" class="ref-inline">[18]</a>.</p>
+
+    <p><strong>Sem OMOP, você não escala estudos multicêntricos. Com OMOP, você conecta a Hapvida a qualquer rede de pesquisa global.</strong></p>
+
+    <p>A maioria dos dados clínicos relevantes está em texto livre — evolução médica, laudos, cartas de referência. LLMs com NER (Named Entity Recognition) clínico transformam esse ruído em dados estruturados e consultáveis <a href="#ref10" class="ref-inline">[10]</a><a href="#ref20" class="ref-inline">[20]</a>.</p>
+  </div>
+
+  <hr class="sep">
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BLOCO 4 — COMO O MUNDO ESTÁ FAZENDO
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <p class="section-tag">Módulo 4 · LLMs em recrutamento clínico</p>
+    <h2>Como o Mundo Está Fazendo</h2>
+
+    <p>O pipeline que Stanford, NIH, MSKCC e Europa já validaram:</p>
+
+    <div class="pipeline-box">
+      <div class="pipe-step">📄 EHR / Prontuário</div>
+      <span class="pipe-arr">→</span>
+      <div class="pipe-step ai">🧠 LLM Parsing (NER)</div>
+      <span class="pipe-arr">→</span>
+      <div class="pipe-step ai">🔍 Trial Matching</div>
+      <span class="pipe-arr">→</span>
+      <div class="pipe-step ai">📊 Ranking</div>
+      <span class="pipe-arr">→</span>
+      <div class="pipe-step">👩‍⚕️ Decisão Humana</div>
+    </div>
+
+    <p><strong>Evidências práticas:</strong></p>
+    <ul>
+      <li>Sistema RECTIFIER (GPT-4): avaliou 23 critérios de elegibilidade com <strong>98–100% de concordância</strong> com clínicos, a um custo de <strong>US$ 0,10 por paciente triado</strong> <a href="#ref11" class="ref-inline">[11]</a>.</li>
+      <li>TrialMatchAI: alcançou <strong>92% dos pacientes oncológicos com pelo menos um estudo relevante</strong> nas top 20 recomendações, com <strong>>90% de acurácia</strong> na classificação por critério <a href="#ref12" class="ref-inline">[12]</a>.</li>
+      <li>Implementação em 29 estudos: triou <strong>98.348 pacientes</strong>, identificou <strong>825 candidatos elegíveis</strong>, facilitou <strong>117 inscrições</strong>, reduzindo a carga de revisão em <strong>10×</strong> e o tempo de triagem em <strong>41%</strong> (de 3,1 para 1,8 min/prontuário) <a href="#ref13" class="ref-inline">[13]</a>.</li>
+    </ul>
+  </div>
+
+  <hr class="sep">
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BLOCO 5 — COMO A HAPVIDA FAZ
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <p class="section-tag">Hapvida · Pipeline em ação</p>
+    <h2>Como a Gente Faz</h2>
+
+    <p>O pipeline da Hapvida opera em três fases integradas, de forma contínua:</p>
+
+    <div class="pipeline-box">
+      <div class="pipe-step">🕐 02:00 AM — Coleta</div>
+      <span class="pipe-arr">→</span>
+      <div class="pipe-step ai">🔍 Match Determinístico</div>
+      <span class="pipe-arr">→</span>
+      <div class="pipe-step ai">🧠 IA Descreve</div>
+      <span class="pipe-arr">→</span>
+      <div class="pipe-step">📱 App Humano</div>
+      <span class="pipe-arr">→</span>
+      <div class="pipe-step">👨‍⚕️ Médico</div>
+      <span class="pipe-arr">→</span>
+      <div class="pipe-step">📞 Contato</div>
+    </div>
+
+    <h3>Fase 1 — Automática (02:00 AM)</h3>
+    <p>Todo dia às 2h da manhã, o sistema coleta automaticamente todas as consultas do dia anterior e pacientes de centros estratégicos com consultas nos próximos 7 dias. Realiza match determinístico com os critérios dos estudos ativos.</p>
+
+    <h3>Fase 2 — Inteligente (IA)</h3>
+    <p>Pacientes com match são reavaliados pela IA. Ela lê o prontuário completo, descreve e tenta explicar o match — ou contrapor — gerando um resumo de elegibilidade critério a critério.</p>
+    <ul>
+      <li><strong>Duplo sim (✓✓):</strong> A IA confirma que o paciente preenche todos os critérios de inclusão e explica por quê. Esses pacientes são priorizados automaticamente.</li>
+      <li><strong>Match parcial (✓✗):</strong> A IA identifica critérios pendentes (ex.: resultado de PD-L1 não encontrado, biópsia pendente) e recomenda ações antes de confirmar elegibilidade.</li>
+    </ul>
+
+    <h3>Fase 3 — Humana</h3>
+    <p>Recrutadores avaliam no app, priorizando pacientes com duplo sim. Médicos recebem o resumo da IA + avaliação do recrutador e confirmam ou rejeitam com justificativa clínica. Paciente é informado, consulta de screening agendada. <strong>O ciclo recomeça todo dia às 2h.</strong></p>
+  </div>
+
+  <hr class="sep">
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BLOCO 6 — RESULTADOS HAPVIDA
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <p class="section-tag">Resultados · Hapvida</p>
+    <h2>Os Números da Nossa Operação</h2>
+
+    <div class="stat-row">
+      <div class="stat-box green">
+        <div class="val">170</div>
+        <div class="lbl">pacientes elegíveis<br>identificados em 2026</div>
+      </div>
+      <div class="stat-box amber">
+        <div class="val">400+</div>
+        <div class="lbl">pacientes aguardando<br>resultado de exames</div>
+      </div>
+    </div>
+
+    <p>Maior base <strong>OMOP</strong> de saúde suplementar da América Latina. Cada exame que chega pode mudar o status de elegibilidade — em tempo real. Posicionamento da Hapvida como <strong>plataforma de pesquisa</strong>, não só operadora.</p>
+  </div>
+
+  <hr class="sep">
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BLOCO 7 — O FUTURO
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <p class="section-tag">Módulo 5 · Além do recrutamento</p>
+    <h2>O Futuro Já Começou</h2>
+
+    <div class="pillar-grid">
+      <div class="pillar-card" style="border-color:#00a868;background:#f0faf5">
+        <h4 style="color:#00a868">🪞 Gêmeos Digitais</h4>
+        <p>Réplicas virtuais de pacientes. O FDA já reconhece como evidência complementar. Simulam resposta antes de recrutar.</p>
+        <p class="note">[6][7][8]</p>
+      </div>
+      <div class="pillar-card" style="border-color:#2563eb;background:#eff6ff">
+        <h4 style="color:#2563eb">⚗️ Controles Sintéticos</h4>
+        <p>Substituir placebo com dados reais. Cerliponase alfa: aprovada pelo FDA sem placebo. Braço único. 100% RWD.</p>
+        <p class="note">[9]</p>
+      </div>
+      <div class="pillar-card" style="border-color:#7c3aed;background:#f5f3ff">
+        <h4 style="color:#7c3aed">🔐 Federated Learning</h4>
+        <p>Treinar modelos sem mover dados. 99% da qualidade de modelos centralizados. GDPR-compliant by design.</p>
+        <p class="note">[14][15]</p>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box green" style="flex:none;width:100%">
+        <div class="val" style="font-size:48px">18 meses</div>
+        <div class="lbl" style="font-size:13px">O modelo preditivo de amanhã vai identificar um candidato a ensaio<br>18 meses antes dele ter sintomas <a href="#ref5" class="ref-inline">[5]</a></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="sep">
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FECHAMENTO
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="section">
+    <p class="section-tag">Fechamento</p>
+    <h2>A Virada</h2>
+
+    <div class="quote-block" style="border-left-color:#00a868;background:#f0faf5">
+      <p style="font-size:16px;font-weight:500">"O próximo grande estudo clínico não vai ser atrasado por falta de pacientes. Vai ser acelerado por <strong>dados que já existem</strong> — e que finalmente sabemos usar."</p>
+    </div>
+
+    <p style="text-align:center;margin-top:16px;color:#888;font-size:13px">
+      <strong style="color:#111">Victor Hugo Ovani Marchetti</strong><br>
+      Médico · Mestrando em Saúde Pública · LABDAPS/USP · Hapvida<br>
+      <a href="https://victorovanimarchetti.com" style="color:#00a868;text-decoration:none;font-weight:600">victorovanimarchetti.com</a> · 
+      <a href="https://linkedin.com/in/victorovanimarchetti" style="color:#2563eb;text-decoration:none;font-weight:600">LinkedIn</a>
+    </p>
+  </div>
+
+  <hr class="sep">
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       REFERÊNCIAS
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="ref-section page-break">
+    <h2>Referências</h2>
+
+    <ol class="ref-list">
+      <li class="ref-item" id="ref1">
+        <span class="authors">Treweek S, Pitkethly M, Cook J, et al.</span>
+        <span class="title"> Strategies to Improve Recruitment to Randomised Trials.</span>
+        <span class="journal"> Cochrane Database Syst Rev.</span> 2018;2:MR000013.
+        <br><a href="https://doi.org/10.1002/14651858.MR000013.pub6" target="_blank">doi:10.1002/14651858.MR000013.pub6</a>
+      </li>
+      <li class="ref-item" id="ref2">
+        <span class="authors">Houghton C, Dowling M, Meskell P, et al.</span>
+        <span class="title"> Factors That Impact on Recruitment to Randomised Trials in Health Care: A Qualitative Evidence Synthesis.</span>
+        <span class="journal"> Cochrane Database Syst Rev.</span> 2020;10:MR000045.
+        <br><a href="https://doi.org/10.1002/14651858.MR000045.pub2" target="_blank">doi:10.1002/14651858.MR000045.pub2</a>
+      </li>
+      <li class="ref-item" id="ref3">
+        <span class="authors">Darden PM, Davis AM, Lee JY, et al.</span>
+        <span class="title"> Active vs Traditional Methods of Recruiting Children for a Clinical Trial in Rural Primary Care Clinics.</span>
+        <span class="journal"> JAMA Network Open.</span> 2022;5(11):e2244040.
+        <br><a href="https://doi.org/10.1001/jamanetworkopen.2022.44040" target="_blank">doi:10.1001/jamanetworkopen.2022.44040</a>
+      </li>
+      <li class="ref-item" id="ref4">
+        <span class="authors">Brøgger-Mikkelsen M, Ali Z, Zibert JR, Andersen AD, Thomsen SF.</span>
+        <span class="title"> Online Patient Recruitment in Clinical Trials: Systematic Review and Meta-Analysis.</span>
+        <span class="journal"> J Med Internet Res.</span> 2020;22(11):e22179.
+        <br><a href="https://doi.org/10.2196/22179" target="_blank">doi:10.2196/22179</a>
+      </li>
+      <li class="ref-item" id="ref5">
+        <span class="authors">Khera R, Oikonomou EK, Nadkarni GN, et al.</span>
+        <span class="title"> Transforming Cardiovascular Care With Artificial Intelligence: From Discovery to Practice.</span>
+        <span class="journal"> J Am Coll Cardiol.</span> 2024;84(1):97-114.
+        <br><a href="https://doi.org/10.1016/j.jacc.2024.05.003" target="_blank">doi:10.1016/j.jacc.2024.05.003</a>
+      </li>
+      <li class="ref-item" id="ref6">
+        <span class="authors">Warraich HJ, Tazbaz T, Califf RM.</span>
+        <span class="title"> FDA Perspective on the Regulation of Artificial Intelligence in Health Care and Biomedicine.</span>
+        <span class="journal"> JAMA.</span> 2025;333(3):241-247.
+        <br><a href="https://doi.org/10.1001/jama.2024.21451" target="_blank">doi:10.1001/jama.2024.21451</a>
+      </li>
+      <li class="ref-item" id="ref7">
+        <span class="authors">Moingeon P, Chenel M, Rousseau C, Voisin E, Guedj M.</span>
+        <span class="title"> Virtual Patients, Digital Twins and Causal Disease Models: Paving the Ground for in Silico Clinical Trials.</span>
+        <span class="journal"> Drug Discov Today.</span> 2023;28(7):103605.
+        <br><a href="https://doi.org/10.1016/j.drudis.2023.103605" target="_blank">doi:10.1016/j.drudis.2023.103605</a>
+      </li>
+      <li class="ref-item" id="ref8">
+        <span class="authors">Pammi M, Shah PS, Yang LK, et al.</span>
+        <span class="title"> Digital Twins, Synthetic Patient Data, and in-Silico Trials: Can They Empower Paediatric Clinical Trials?</span>
+        <span class="journal"> Lancet Digit Health.</span> 2025;7(5):100851.
+        <br><a href="https://doi.org/10.1016/j.landig.2025.01.007" target="_blank">doi:10.1016/j.landig.2025.01.007</a>
+      </li>
+      <li class="ref-item" id="ref9">
+        <span class="authors">Zannad F, Khan MS, Bansal N, et al.</span>
+        <span class="title"> MASLD, MASH, and the CKM Spectrum: A Roadmap for Multiorgan Clinical Trial Design.</span>
+        <span class="journal"> J Am Coll Cardiol.</span> 2026;:S0735-1097(25)10429-4.
+        <br><a href="https://doi.org/10.1016/j.jacc.2025.12.015" target="_blank">doi:10.1016/j.jacc.2025.12.015</a>
+      </li>
+      <li class="ref-item" id="ref10">
+        <span class="authors">von Itzstein MS, Hullings M, Mayo H, et al.</span>
+        <span class="title"> Application of Information Technology to Clinical Trial Evaluation and Enrollment: A Review.</span>
+        <span class="journal"> JAMA Oncol.</span> 2021;7(10):1559-1566.
+        <br><a href="https://doi.org/10.1001/jamaoncol.2021.1165" target="_blank">doi:10.1001/jamaoncol.2021.1165</a>
+      </li>
+      <li class="ref-item" id="ref11">
+        <span class="authors">Cunningham JW, Abraham WT, Bhatt AS, et al.</span>
+        <span class="title"> Artificial Intelligence in Cardiovascular Clinical Trials.</span>
+        <span class="journal"> J Am Coll Cardiol.</span> 2024;84(20):2051-2062.
+        <br><a href="https://doi.org/10.1016/j.jacc.2024.08.069" target="_blank">doi:10.1016/j.jacc.2024.08.069</a>
+      </li>
+      <li class="ref-item" id="ref12">
+        <span class="authors">Abdallah M, Nakken S, Georges M, et al.</span>
+        <span class="title"> TrialMatchAI: An End-to-End AI-powered Clinical Trial Recommendation System.</span>
+        <span class="journal"> Nat Commun.</span> 2026;10.1038/s41467-026-70509-w.
+        <br><a href="https://doi.org/10.1038/s41467-026-70509-w" target="_blank">doi:10.1038/s41467-026-70509-w</a>
+      </li>
+      <li class="ref-item" id="ref13">
+        <span class="authors">Gong G, Liu J, Pandya S, et al.</span>
+        <span class="title"> Clinical Trial Patient Matching: A Real-Time, CDM and AI-Driven System for Semiautomated Prescreening.</span>
+        <span class="journal"> JCO Clin Cancer Inform.</span> 2026;10:e2500262.
+        <br><a href="https://doi.org/10.1200/CCI-25-00262" target="_blank">doi:10.1200/CCI-25-00262</a>
+      </li>
+      <li class="ref-item" id="ref14">
+        <span class="authors">Sheller MJ, Edwards B, Reina GA, et al.</span>
+        <span class="title"> Federated Learning in Medicine: Facilitating Multi-Institutional Collaborations Without Sharing Patient Data.</span>
+        <span class="journal"> Sci Rep.</span> 2020;10(1):12598.
+        <br><a href="https://doi.org/10.1038/s41598-020-69250-1" target="_blank">doi:10.1038/s41598-020-69250-1</a>
+      </li>
+      <li class="ref-item" id="ref15">
+        <span class="authors">Brauneck A, Schmalhorst L, Kazemi Majdabadi MM, et al.</span>
+        <span class="title"> Federated Machine Learning, Privacy-Enhancing Technologies, and Data Protection Laws in Medical Research.</span>
+        <span class="journal"> J Med Internet Res.</span> 2023;25:e41588.
+        <br><a href="https://doi.org/10.2196/41588" target="_blank">doi:10.2196/41588</a>
+      </li>
+      <li class="ref-item" id="ref16">
+        <span class="authors">Reich C, Ostropolets A, Ryan P, et al.</span>
+        <span class="title"> OHDSI Standardized Vocabularies — a Large-Scale Centralized Reference Ontology for International Data Harmonization.</span>
+        <span class="journal"> JAMIA.</span> 2024;31(3):583-590.
+        <br><a href="https://doi.org/10.1093/jamia/ocad247" target="_blank">doi:10.1093/jamia/ocad247</a>
+      </li>
+      <li class="ref-item" id="ref17">
+        <span class="authors">Voss EA, Makadia R, Matcho A, et al.</span>
+        <span class="title"> Feasibility and Utility of Applications of the Common Data Model to Multiple, Disparate Observational Health Databases.</span>
+        <span class="journal"> JAMIA.</span> 2015;22(3):553-64.
+        <br><a href="https://doi.org/10.1093/jamia/ocu023" target="_blank">doi:10.1093/jamia/ocu023</a>
+      </li>
+      <li class="ref-item" id="ref18">
+        <span class="authors">Ward R, Hallinan CM, Ormiston-Smith D, Chidgey C, Boyle D.</span>
+        <span class="title"> The OMOP Common Data Model in Australian Primary Care Data.</span>
+        <span class="journal"> PLoS One.</span> 2024;19(4):e0301557.
+        <br><a href="https://doi.org/10.1371/journal.pone.0301557" target="_blank">doi:10.1371/journal.pone.0301557</a>
+      </li>
+      <li class="ref-item" id="ref19">
+        <span class="authors">Vashisht R, Jung K, Schuler A, et al.</span>
+        <span class="title"> Association of Hemoglobin A1c Levels With Use of Sulfonylureas, DPP-4 Inhibitors, and Thiazolidinediones in T2DM: Analysis From OHDSI.</span>
+        <span class="journal"> JAMA Network Open.</span> 2018;1(4):e181755.
+        <br><a href="https://doi.org/10.1001/jamanetworkopen.2018.1755" target="_blank">doi:10.1001/jamanetworkopen.2018.1755</a>
+      </li>
+      <li class="ref-item" id="ref20">
+        <span class="authors">Meystre SM, Heider PM, Cates A, et al.</span>
+        <span class="title"> Piloting an Automated Clinical Trial Eligibility Surveillance and Provider Alert System Based on AI and Standard Data Models.</span>
+        <span class="journal"> BMC Med Res Methodol.</span> 2023;23(1):88.
+        <br><a href="https://doi.org/10.1186/s12874-023-01916-6" target="_blank">doi:10.1186/s12874-023-01916-6</a>
+      </li>
+    </ol>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="footer">
+    <p class="name">Victor Hugo Ovani Marchetti</p>
+    <p>Médico · Mestrando em Saúde Pública · LABDAPS/USP · Hapvida</p>
+    <p style="margin-top:4px"><a href="https://victorovanimarchetti.com" style="color:#00a868;text-decoration:none">victorovanimarchetti.com</a> · <a href="https://linkedin.com/in/victorovanimarchetti" style="color:#2563eb;text-decoration:none">LinkedIn</a></p>
+    <p style="margin-top:10px;color:#ccc;font-size:10px">Abril 2026 · Para salvar como PDF: Ctrl+P → Destino: Salvar como PDF</p>
+  </div>
+</div>
+
+<button class="print-btn no-print" onclick="window.print()">📄 Salvar como PDF</button>
+
+<script>
+const _lossStart=Date.now(),_lossRate=8000000/86400;
+function _fmtUSD(v){return'US$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function _fmtBRL(v){return'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function _updLoss(){
+  const s=(Date.now()-_lossStart)/1000,usd=s*_lossRate,brl=usd*5.7;
+  const el=document.getElementById('loss-web');
+  if(el)el.textContent=_fmtUSD(usd)+' / '+_fmtBRL(brl);
+}
+setInterval(_updLoss,100);_updLoss();
+</script>
+
+</body>
+</html>
