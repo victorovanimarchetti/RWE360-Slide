@@ -971,8 +971,8 @@ function _startCounters(){
 }
 
 document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();_startCounters();next()}
-  else if(e.key==='ArrowLeft'){e.preventDefault();_startCounters();go(c-1)}
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '||e.key==='PageDown'){e.preventDefault();_startCounters();next()}
+  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();_startCounters();go(c-1)}
   else if(e.key.toLowerCase()==='n')document.getElementById('nd').classList.toggle('open');
   else if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
 });
