@@ -936,10 +936,12 @@ document.getElementById('prog').style.width=(1/N*100)+'%';
 try{localStorage.setItem('slide_current','0')}catch(e){}
 
 /* ─── Loss Counter: US$8M/day = US$92.59/sec ─── */
-const _lossStart=Date.now(),_lossRate=8000000/86400;
+let _lossStart=null;
+const _lossRate=8000000/86400;
 function _fmtUSD(v){return'US$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})}
 function _fmtBRL(v){return'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0})}
 function _updLoss(){
+  if(!_lossStart){const f=document.getElementById('loss-fixed');if(f)f.textContent='US$ 0 / R$ 0';return}
   const s=(Date.now()-_lossStart)/1000,usd=s*_lossRate,brl=usd*5.7;
   const t=_fmtUSD(usd)+' / '+_fmtBRL(brl);
   const f=document.getElementById('loss-fixed');
@@ -948,26 +950,42 @@ function _updLoss(){
 setInterval(_updLoss,100);_updLoss();
 
 /* ─── Speaker Timer: clock + chronometer ─── */
-const _chronoStart=Date.now();
+let _chronoStart=null;
 function _pad(n){return String(n).padStart(2,'0')}
 function _updTimer(){
   const now=new Date();
   document.getElementById('st-clock').textContent=_pad(now.getHours())+':'+_pad(now.getMinutes());
+  if(!_chronoStart){document.getElementById('st-chrono').textContent='00:00';return}
   const el=Math.floor((Date.now()-_chronoStart)/1000),m=Math.floor(el/60),s=el%60;
   document.getElementById('st-chrono').textContent=_pad(m)+':'+_pad(s);
 }
 setInterval(_updTimer,1000);_updTimer();
 
+/* ─── Start counters on first interaction ─── */
+let _countersStarted=false;
+function _startCounters(){
+  if(_countersStarted)return;
+  _countersStarted=true;
+  _lossStart=Date.now();
+  _chronoStart=Date.now();
+}
+
 document.addEventListener('keydown',e=>{
-  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next()}
-  else if(e.key==='ArrowLeft'){e.preventDefault();go(c-1)}
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();_startCounters();next()}
+  else if(e.key==='ArrowLeft'){e.preventDefault();_startCounters();go(c-1)}
   else if(e.key.toLowerCase()==='n')document.getElementById('nd').classList.toggle('open');
   else if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
 });
 
+/* ─── Click to advance ─── */
+document.addEventListener('click',e=>{
+  if(e.target.closest('.qr-fixed,.loss-fixed,.notes,.speaker-timer,a'))return;
+  _startCounters();next();
+});
+
 let tx=0;
 document.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
-document.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50){d<0?next():go(c-1)}});
+document.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50){_startCounters();d<0?next():go(c-1)}});
 
 
 /* ─── Speaker Notes ─── */
