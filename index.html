@@ -289,6 +289,15 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
 
 .flow-arrow-col{display:flex;align-items:center;justify-content:center;font-size:1.2vw;color:#00a868;padding-top:2vh}
 
+/* ─── Speaker timer + clock ─── */
+.speaker-timer{position:fixed;top:2.2vh;left:2vw;z-index:90;display:flex;align-items:center;gap:.8vw;
+  padding:.4vh .8vw;background:rgba(0,0,0,.65);border-radius:.3vw;
+  font-variant-numeric:tabular-nums;opacity:.35;transition:opacity .3s}
+.speaker-timer:hover{opacity:.9}
+.speaker-timer .st-clock{font-size:.75vw;color:#fff;font-weight:600;letter-spacing:.03em}
+.speaker-timer .st-sep{color:rgba(255,255,255,.3);font-size:.6vw}
+.speaker-timer .st-chrono{font-size:.75vw;color:#4ade80;font-weight:700;letter-spacing:.03em}
+
 /* ─── Responsive fallback ─── */
 @media(max-width:900px){
   .hero,.two-forces,.pillars,.evidence,.horizon,.shots{grid-template-columns:1fr}
@@ -305,6 +314,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
 <img src="img/hapvida-logo.png" alt="Hapvida" class="hw">
 <div class="prog" id="prog"></div>
 <div class="notes" id="nd"></div>
+<div class="speaker-timer"><span class="st-clock" id="st-clock">00:00</span><span class="st-sep">│</span><span class="st-chrono" id="st-chrono">00:00</span></div>
 <div class="qr-fixed"><img src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://bit.ly/RWE360pdf&bgcolor=ffffff&color=222222" alt="QR"><div class="qr-url">bit.ly/RWE360pdf</div></div>
 <div class="loss-fixed"><div class="loss-lbl">💸 Desde o início desta apresentação</div><div class="loss-val" id="loss-fixed">US$ 0</div><div class="loss-lbl">perdidos em recrutamento</div></div>
 
@@ -889,17 +899,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
       </div>
       <div class="right" style="gap:1.2vh">
         <h3>Obrigado!</h3>
-        <div style="display:flex;gap:2.5vw;align-items:flex-start">
-          <div style="text-align:center">
-            <p class="ask" style="font-size:.6vw;margin-bottom:.4vh">Apresentação interativa</p>
-            <img id="qr-interact" src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=https://victorovanimarchetti.com/slide/&bgcolor=ffffff&color=00a868" alt="QR Interativo" width="130" height="130" style="border-radius:.4vw;border:2px solid #e5e7eb">
-            <p class="url" style="font-size:.48vw;color:#00a868;font-weight:600;margin-top:.3vh">victorovanimarchetti.com/slide</p>
-          </div>
-          <div style="text-align:center">
-            <p class="ask" style="font-size:.6vw;margin-bottom:.4vh">Conteúdo + Referências</p>
-            <img id="qr-refs" src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=https://bit.ly/RWE360pdf&bgcolor=ffffff&color=2563eb" alt="QR PDF" width="130" height="130" style="border-radius:.4vw;border:2px solid #e5e7eb">
-            <p class="url" style="font-size:.48vw;color:#2563eb;font-weight:600;margin-top:.3vh">bit.ly/RWE360pdf</p>
-          </div>
+        <div style="text-align:center">
+          <p class="ask" style="font-size:.6vw;margin-bottom:.4vh">Conteúdo + Referências</p>
+          <img id="qr-refs" src="https://api.qrserver.com/v1/create-qr-code/?size=130x130&data=https://bit.ly/RWE360pdf&bgcolor=ffffff&color=2563eb" alt="QR PDF" width="130" height="130" style="border-radius:.4vw;border:2px solid #e5e7eb">
+          <p class="url" style="font-size:.48vw;color:#2563eb;font-weight:600;margin-top:.3vh">bit.ly/RWE360pdf</p>
         </div>
       </div>
     </div>
@@ -943,6 +946,17 @@ function _updLoss(){
   if(f)f.textContent=t;
 }
 setInterval(_updLoss,100);_updLoss();
+
+/* ─── Speaker Timer: clock + chronometer ─── */
+const _chronoStart=Date.now();
+function _pad(n){return String(n).padStart(2,'0')}
+function _updTimer(){
+  const now=new Date();
+  document.getElementById('st-clock').textContent=_pad(now.getHours())+':'+_pad(now.getMinutes());
+  const el=Math.floor((Date.now()-_chronoStart)/1000),m=Math.floor(el/60),s=el%60;
+  document.getElementById('st-chrono').textContent=_pad(m)+':'+_pad(s);
+}
+setInterval(_updTimer,1000);_updTimer();
 
 document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();next()}
