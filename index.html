@@ -351,13 +351,15 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
       <h3 class="grn">IA Generativa</h3>
       <div class="bar" style="background:#00a868"></div>
       <p>Transforma e <strong>automatiza processos manuais</strong>. LLMs leem prontuários inteiros, extraem dados estruturados, geram sumários clínicos — e fazem triagem em linguagem natural.</p>
-      <p class="examples">ChatGPT, GPT-4, LLaMA, Claude · NER clínico · AI Scribe · Sumarização de prontuário</p>
+      <p style="font-size:.82vw;line-height:1.55;color:#444;margin-top:.6vh">🔬 <strong>Exemplo real:</strong> O sistema RECTIFIER (Stanford, JACC 2024) usou GPT-4 para ler prontuários cardiológicos e avaliar 23 critérios de elegibilidade — com <strong>98–100% de concordância</strong> com clínicos, a US$ 0,10 por paciente [11].</p>
+      <p class="examples">GPT-4, LLaMA, Claude · NER clínico · AI Scribe · Sumarização de prontuário</p>
     </div>
     <div class="f force" style="background:#f5f3ff;border-left:4px solid #7c3aed;border-radius:.6vw">
       <span class="icon">📈</span>
       <h3 class="pur">IA Preditiva</h3>
       <div class="bar" style="background:#7c3aed"></div>
       <p>Prevê o futuro. Modelos que aprendem padrões em dados longitudinais para antecipar quem vai <strong>desenvolver uma condição, responder a um tratamento ou abandonar</strong> um estudo.</p>
+      <p style="font-size:.82vw;line-height:1.55;color:#444;margin-top:.6vh">🔬 <strong>Exemplo real:</strong> Na Mayo Clinic, IA aplicada a ECGs de rotina detecta fibrilação atrial assintomática e prediz insuficiência cardíaca <strong>antes dos sintomas</strong>. Khera et al. (JACC, 2024) mostram que modelos de trajetória cardiovascular podem identificar candidatos a ensaios <strong>meses antes do diagnóstico formal</strong> [5].</p>
       <p class="examples">Modelos de trajetória · Risk scoring · Digital twins · Federated learning</p>
     </div>
   </div>
@@ -369,12 +371,51 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
 
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SLIDE 3 · GARBAGE IN, GARBAGE OUT
-     Narrativa: dados são caos → precisamos organizar → 3 pilares
+     SLIDE 3 · IA EM RWE: ALÉM DO ÓBVIO
+     Narrativa: Digital Twins + Synthetic Controls + Federated Learning
      ══════════════════════════════════════════════════════════════════ -->
 <div class="s" data-s="2">
+  <div class="f s7-head">
+    <p class="tag">Módulo 2 · IA em RWE e Pesquisa Clínica</p>
+    <h2>Além do <span class="grn">óbvio</span></h2>
+  </div>
+
+  <div class="horizon">
+    <div class="f hcard" style="border-left-color:#00a868">
+      <span class="icon">🪞</span>
+      <h3>Gêmeos Digitais</h3>
+      <div class="bar" style="background:#00a868"></div>
+      <p>Réplicas virtuais de pacientes construídas com dados de prontuário, imagem e laboratório. <strong>Simulam resposta a um protocolo antes de recrutar.</strong></p>
+      <p style="font-size:.72vw;line-height:1.5;color:#444;margin-top:.5vh">O <strong>FDA já reconhece</strong> digital twins como ferramenta para gerar registros clínicos simulados e prever resposta do grupo placebo (Warraich, JAMA 2025 [6]).</p>
+      <p class="note">Moingeon, Drug Discov Today, 2023 [7] · Pammi, Lancet Digit Health, 2025 [8]</p>
+    </div>
+    <div class="f hcard" style="border-left-color:#2563eb">
+      <span class="icon">⚗️</span>
+      <h3>Controles Sintéticos</h3>
+      <div class="bar" style="background:#2563eb"></div>
+      <p>Substituir braço placebo com dados reais. Reduz N necessário e resolve dilemas éticos em doenças graves.</p>
+      <p style="font-size:.72vw;line-height:1.5;color:#444;margin-top:.5vh"><strong>Exemplo real:</strong> O FDA aprovou <strong>cerliponase alfa</strong> (doença de Batten) usando controles sintéticos — estudo de braço único, 100% RWD, sem placebo (Zannad, JACC 2026 [9]).</p>
+    </div>
+    <div class="f hcard" style="border-left-color:#7c3aed">
+      <span class="icon">🔐</span>
+      <h3>Federated Learning</h3>
+      <div class="bar" style="background:#7c3aed"></div>
+      <p>Treinar modelos <strong>sem mover dados sensíveis</strong>. Colaboração multi-institucional com privacidade preservada.</p>
+      <p style="font-size:.72vw;line-height:1.5;color:#444;margin-top:.5vh"><strong>Evidência:</strong> Modelos federados entre <strong>10 instituições alcançam 99%</strong> da qualidade de modelos centralizados (Sheller, Sci Rep 2020 [14]). GDPR-compliant by design (Brauneck, JMIR 2023 [15]).</p>
+    </div>
+  </div>
+
+  <p class="ref">Warraich, JAMA, 2025 [6] · Moingeon, Drug Discov Today, 2023 [7] · Pammi, Lancet, 2025 [8] · Zannad, JACC, 2026 [9] · Sheller, Sci Rep, 2020 [14] · Brauneck, JMIR, 2023 [15]</p>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SLIDE 4 · GARBAGE IN, GARBAGE OUT
+     Narrativa: dados são caos → precisamos organizar → 3 pilares
+     ══════════════════════════════════════════════════════════════════ -->
+<div class="s" data-s="3">
   <div class="f s3-top">
-    <p class="tag">Módulo 2 · O alicerce</p>
+    <p class="tag">Módulo 3 · O alicerce</p>
     <h2><span style="color:#dc2626">Garbage in,</span> garbage out.</h2>
     <p class="sub">80% dos dados clínicos estão em texto livre. Sem estruturação,<br>nenhuma IA do mundo vai encontrar o paciente certo.</p>
   </div>
@@ -397,22 +438,22 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
       <span class="icon">🤖</span>
       <h3>AI Scribe</h3>
       <div class="bar" style="background:#7c3aed"></div>
-      <p>LLMs com NER clínico transformam texto livre em <strong>dados estruturados e consultáveis</strong>. Extrair "HbA1c > 7,5%" de notas de endo.</p>
+      <p>IA transcreve a conversa médico-paciente em tempo real e gera <strong>registros estruturados automaticamente</strong>. Dados já nascem consultáveis — diagnósticos, exames, medicações.</p>
       <p class="note">von Itzstein, JAMA Oncol, 2021 [10] · Meystre, 2023 [20]</p>
     </div>
   </div>
   <div class="f s3-bottom">
-    <p><strong>Sem OMOP, você não escala multicêntrico.</strong> Com OMOP, você conecta a Hapvida a qualquer rede de pesquisa global.</p>
+    <p><strong>Sem OMOP, você não escala multicêntrico.</strong> Com OMOP, qualquer operadora se conecta a redes de pesquisa globais.</p>
   </div>
   <p class="ref">Ward et al., PLoS ONE, 2024 [18] · Vashisht et al., JAMA Network Open, 2018 [19]</p>
 </div>
 
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SLIDE 4 · MILHÕES DE VIDAS — COMO ACHAR O PACIENTE CERTO?
+     SLIDE 5 · MILHÕES DE VIDAS — COMO ACHAR O PACIENTE CERTO?
      Narrativa: pausa dramática → escala do problema → "a gente sabe"
      ══════════════════════════════════════════════════════════════════ -->
-<div class="s" data-s="3">
+<div class="s" data-s="4">
   <div class="dramatic">
     <p class="f above">Os dados estão organizados. A infraestrutura existe.<br>Agora o desafio real:</p>
     <p class="f mega grn">Milhões</p>
@@ -423,12 +464,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
 
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SLIDE 5 · COMO O MUNDO ESTÁ FAZENDO
+     SLIDE 6 · COMO O MUNDO ESTÁ FAZENDO
      Narrativa: pipeline genérico de LLM → evidências de 4 sistemas
      ══════════════════════════════════════════════════════════════════ -->
-<div class="s" data-s="4">
+<div class="s" data-s="5">
   <div class="f s5-head">
-    <p class="tag">Módulo 3 · LLMs em recrutamento clínico</p>
+    <p class="tag">Módulo 4 · LLMs em recrutamento clínico</p>
     <h2>Como o mundo está fazendo</h2>
     <p class="sub">O pipeline que Stanford, NIH, MSKCC e Europa já validaram</p>
   </div>
@@ -445,41 +486,44 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
     <div class="llm-step">👩‍⚕️ Clínico<small>Decisão humana final</small></div>
   </div>
 
-  <div class="f evidence">
-    <div class="ev-card">
-      <p class="num grn">98–100%</p>
-      <p class="desc">concordância com clínicos<br>na triagem de elegibilidade</p>
-      <p class="src">RECTIFIER · GPT-4<br>Cunningham, JACC 2024 [11]</p>
+  <div class="f" style="display:grid;grid-template-columns:1fr 1fr;gap:2vw;width:100%;margin-top:1vh">
+    <!-- RECTIFIER -->
+    <div style="padding:2vh 1.5vw;border-radius:.5vw;background:#f8fdfb;border-left:4px solid #00a868">
+      <p style="font-size:.62vw;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#00a868;margin-bottom:.6vh">RECTIFIER · Stanford · JACC 2024 [11]</p>
+      <p style="font-size:1.6vw;font-weight:900;color:#00a868;margin-bottom:.8vh">98–100% de concordância</p>
+      <p style="font-size:.82vw;line-height:1.6;color:#444">Usaram <strong>GPT-4</strong> para ler prontuários cardiológicos e avaliar <strong>23 critérios de elegibilidade</strong> de um estudo de insuficiência cardíaca. A IA concordou com clínicos em 98–100% dos casos.</p>
+      <p style="font-size:.72vw;color:#666;margin-top:.6vh;line-height:1.5">Custo por paciente triado: <strong>US$ 0,10</strong>. Versus horas de revisão manual por um coordenador de pesquisa.</p>
     </div>
-    <div class="ev-card">
-      <p class="num amb">US$0,10</p>
-      <p class="desc">custo por paciente triado<br>vs. revisão manual tradicional</p>
-      <p class="src">Cunningham et al.<br>JACC, 2024 [11]</p>
-    </div>
-    <div class="ev-card">
-      <p class="num blu">92%</p>
-      <p class="desc">dos pacientes onco com<br>≥1 trial relevante no top-20</p>
-      <p class="src">TrialMatchAI · RAG + CoT<br>Abdallah, Nat Commun 2026 [12]</p>
-    </div>
-    <div class="ev-card">
-      <p class="num pur">2× mais</p>
-      <p class="desc">pacientes elegíveis encontrados<br>vs. triagem manual (81.8% vs 36.4%)</p>
-      <p class="src">TrialGPT adaptado · LLM local<br>Syed, JAMIA 2026 [21]</p>
+    <!-- Gong -->
+    <div style="padding:2vh 1.5vw;border-radius:.5vw;background:#eff6ff;border-left:4px solid #2563eb">
+      <p style="font-size:.62vw;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#2563eb;margin-bottom:.6vh">Implementação Real · JCO CCI 2026 [13]</p>
+      <p style="font-size:1.6vw;font-weight:900;color:#2563eb;margin-bottom:.8vh">98.348 pacientes triados</p>
+      <p style="font-size:.82vw;line-height:1.6;color:#444">Gong et al. implementaram o sistema em <strong>29 estudos oncológicos</strong> em um único centro. O LLM triou quase 100 mil prontuários, identificou <strong>825 elegíveis</strong> e facilitou <strong>117 inscrições</strong>.</p>
+      <p style="font-size:.72vw;color:#666;margin-top:.6vh;line-height:1.5">Revisão manual caiu <strong>10×</strong>. Tempo de triagem por prontuário: de 3,1 para <strong>1,8 minutos</strong> (−41%).</p>
     </div>
   </div>
 
-  <div class="f" style="text-align:center;margin-top:2vh">
-    <p style="font-size:.88vw;color:#777;line-height:1.6">Gong et al. (JCO CCI, 2026): <strong>98.348 pacientes</strong> triados, <strong>825 elegíveis</strong>, <strong>117 inscritos</strong> — revisão manual reduzida em <strong>10×</strong>, tempo de triagem <strong>-41%</strong> [13]</p>
+  <div class="f" style="display:grid;grid-template-columns:1fr 1fr;gap:2vw;width:100%;margin-top:1.2vh">
+    <!-- TrialMatchAI -->
+    <div style="padding:1.5vh 1.5vw;border-radius:.5vw;background:#f5f3ff;border-left:4px solid #7c3aed">
+      <p style="font-size:.62vw;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7c3aed;margin-bottom:.4vh">TrialMatchAI · Nat Commun 2026 [12]</p>
+      <p style="font-size:.82vw;line-height:1.6;color:#444">Sistema end-to-end com <strong>RAG + Chain-of-Thought</strong>: <strong>92%</strong> dos pacientes oncológicos tinham ≥1 estudo relevante no top 20. Acurácia >90% na classificação critério a critério.</p>
+    </div>
+    <!-- Syed -->
+    <div style="padding:1.5vh 1.5vw;border-radius:.5vw;background:#fffbeb;border-left:4px solid #d97706">
+      <p style="font-size:.62vw;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#d97706;margin-bottom:.4vh">TrialGPT adaptado · JAMIA 2026 [21]</p>
+      <p style="font-size:.82vw;line-height:1.6;color:#444">Hospital europeu usou <strong>LLM local</strong> (sem enviar dados para nuvem). <strong>Dobrou</strong> a taxa de identificação de elegíveis: 81,8% vs 36,4% na triagem manual.</p>
+    </div>
   </div>
 
-  <p class="ref">Cunningham et al., JACC, 2024 [11] · Abdallah et al., Nat Commun, 2026 [12] · Gong et al., JCO CCI, 2026 [13] · Syed et al., JAMIA, 2026 [21] · Callies et al., Commun Med, 2025 [22]</p>
+  <p class="ref">Cunningham et al., JACC, 2024 [11] · Abdallah et al., Nat Commun, 2026 [12] · Gong et al., JCO CCI, 2026 [13] · Syed et al., JAMIA, 2026 [21]</p>
 </div>
 
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SLIDE 6a · VISÃO GERAL DO PIPELINE
+     SLIDE 7a · VISÃO GERAL DO PIPELINE
      ══════════════════════════════════════════════════════════════════ -->
-<div class="s" data-s="5">
+<div class="s" data-s="6">
   <div class="f s6-head">
     <p class="tag">Hapvida · Pipeline em ação · Processo contínuo</p>
     <h2>Como <span class="grn">a gente</span> faz</h2>
@@ -517,9 +561,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
 
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SLIDE 6b · COLETA + MATCH DETERMINÍSTICO
+     SLIDE 7b · COLETA + MATCH DETERMINÍSTICO
      ══════════════════════════════════════════════════════════════════ -->
-<div class="s" data-s="6">
+<div class="s" data-s="7">
   <div class="f s6-head">
     <p class="tag">Passo 1 · Coleta automática · Todo dia às 02:00</p>
     <h2>🕐 <span class="grn">02:00 AM</span></h2>
@@ -544,30 +588,42 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
     <div class="mk-panel" style="box-shadow:0 .4vh 2vw rgba(0,0,0,.08)">
       <div class="mk-head h-dark" style="padding:.8vh 1.2vw;font-size:.72vw"><span class="mk-pulse"></span> Coleta Automática · 02:00 AM</div>
       <div class="mk-body" style="padding:1.5vh 1.5vw">
-        <div class="mk-stat" style="padding:.8vh 0"><span class="mk-val" style="font-size:3.5vw">847</span><span class="mk-lbl" style="font-size:.75vw">Consultas avaliadas<br>do dia anterior</span></div>
-        <div class="mk-stat" style="padding:.8vh 0"><span class="mk-val" style="font-size:3.5vw">1.203</span><span class="mk-lbl" style="font-size:.75vw">Pacientes de centros<br>estratégicos · próximos 7d</span></div>
+        <div style="padding:1vh 0;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:.8vw">
+          <span style="font-size:1.8vw">📋</span>
+          <div><p style="font-size:.9vw;font-weight:700;color:#111">Consultas do dia anterior</p><p style="font-size:.7vw;color:#777;line-height:1.5">Todas as consultas realizadas são coletadas automaticamente</p></div>
+        </div>
+        <div style="padding:1vh 0;display:flex;align-items:center;gap:.8vw">
+          <span style="font-size:1.8vw">📅</span>
+          <div><p style="font-size:.9vw;font-weight:700;color:#111">Centros estratégicos · próximos 7 dias</p><p style="font-size:.7vw;color:#777;line-height:1.5">Pacientes agendados em centros com estudos ativos</p></div>
+        </div>
       </div>
     </div>
     <!-- Match -->
     <div class="mk-panel" style="box-shadow:0 .4vh 2vw rgba(0,168,104,.12)">
       <div class="mk-head h-green" style="padding:.8vh 1.2vw;font-size:.72vw">🔍 Match Determinístico · Critérios dos Estudos</div>
       <div class="mk-body" style="padding:1.5vh 1.5vw">
-        <div class="mk-stat" style="padding:.8vh 0;border-bottom:2px solid #d1e7dd"><span class="mk-val grn" style="font-size:3.5vw">23</span><span class="mk-lbl" style="font-size:.75vw">Com match completo<br>em critérios de inclusão</span></div>
-        <div class="mk-stat" style="padding:.8vh 0"><span class="mk-val amb" style="font-size:2.5vw">9</span><span class="mk-lbl" style="font-size:.75vw">Match parcial<br>exame ou dado pendente</span></div>
+        <div style="padding:1vh 0;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:.8vw">
+          <span style="font-size:1.8vw;color:#00a868">✓✓</span>
+          <div><p style="font-size:.9vw;font-weight:700;color:#00a868">Match completo</p><p style="font-size:.7vw;color:#777;line-height:1.5">Paciente atende todos os critérios de inclusão do estudo</p></div>
+        </div>
+        <div style="padding:1vh 0;display:flex;align-items:center;gap:.8vw">
+          <span style="font-size:1.8vw;color:#d97706">✓✗</span>
+          <div><p style="font-size:.9vw;font-weight:700;color:#d97706">Match parcial</p><p style="font-size:.7vw;color:#777;line-height:1.5">Exame ou dado pendente — aguarda resultado para confirmar</p></div>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="f" style="text-align:center;margin-top:3vh">
-    <p style="font-size:1.05vw;color:#555;line-height:1.7">De <strong>2.050 prontuários</strong> avaliados automaticamente → <strong class="grn">23 pacientes</strong> com match em critérios.<br>Esses 23 agora vão para a <strong>IA analisar em profundidade</strong>.</p>
+    <p style="font-size:1.05vw;color:#555;line-height:1.7">Prontuários avaliados automaticamente → pacientes com match são encaminhados para a <strong>IA analisar em profundidade</strong>.</p>
   </div>
 </div>
 
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SLIDE 6c · IA DESCREVE E CONTRAPÕE
+     SLIDE 7c · IA DESCREVE E CONTRAPÕE
      ══════════════════════════════════════════════════════════════════ -->
-<div class="s" data-s="7">
+<div class="s" data-s="8">
   <div class="f s6-head">
     <p class="tag">Passo 2 · IA analisa elegibilidade · Critério a critério</p>
     <h2>🧠 A IA <span class="grn">descreve, explica</span> e contrapõe</h2>
@@ -659,9 +715,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
 
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SLIDE 6d · APP HUMANO + MÉDICO + CONTATO
+     SLIDE 7d · APP HUMANO + MÉDICO + CONTATO
      ══════════════════════════════════════════════════════════════════ -->
-<div class="s" data-s="8">
+<div class="s" data-s="9">
   <div class="f s6-head">
     <p class="tag">Passo 3 · Avaliação humana · Processo contínuo</p>
     <h2>📱 Humanos avaliam. <span class="grn">Médicos confirmam.</span></h2>
@@ -780,74 +836,38 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Inter',sans-serif;
 
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SLIDE 9 · HAPVIDA EM NÚMEROS
-     Narrativa: resultados concretos, impacto real
-     ══════════════════════════════════════════════════════════════════ -->
-<div class="s" data-s="9">
-  <div class="f" style="text-align:center">
-    <p class="tag">Resultados · Hapvida</p>
-    <h2 style="font-size:3.2vw;font-weight:800;line-height:1.08;letter-spacing:-.02em">Os números da <span class="grn">nossa operação</span></h2>
-  </div>
-
-  <div class="f" style="display:grid;grid-template-columns:1fr 1fr;gap:4vw;width:100%;margin-top:3vh">
-    <div style="text-align:center;padding:4vh 2vw;border-radius:.8vw;background:#f0faf5;border:2px solid #c6e7d8">
-      <p style="font-size:8vw;font-weight:900;line-height:1;letter-spacing:-.05em;color:#00a868">170</p>
-      <p style="font-size:1.4vw;font-weight:700;color:#111;margin-top:1.5vh;line-height:1.4">pacientes elegíveis<br>para estudos em 2026</p>
-      <p style="font-size:.75vw;color:#888;margin-top:.8vh">identificados pela plataforma Hapvida</p>
-    </div>
-    <div style="text-align:center;padding:4vh 2vw;border-radius:.8vw;background:#fffbeb;border:2px solid #fde68a">
-      <p style="font-size:8vw;font-weight:900;line-height:1;letter-spacing:-.05em;color:#d97706">400+</p>
-      <p style="font-size:1.4vw;font-weight:700;color:#111;margin-top:1.5vh;line-height:1.4">pacientes aguardando<br>resultado de exames</p>
-      <p style="font-size:.75vw;color:#888;margin-top:.8vh">elegibilidade sendo avaliada · 2026</p>
-    </div>
-  </div>
-
-  <div class="f" style="text-align:center;margin-top:3.5vh">
-    <p style="font-size:1.05vw;color:#555;line-height:1.7">Maior base <strong>OMOP</strong> de saúde suplementar da América Latina. Cada exame que chega pode mudar o status de elegibilidade — <strong>em tempo real.</strong></p>
-  </div>
-</div>
-
-
-<!-- ══════════════════════════════════════════════════════════════════
-     SLIDE 10 · O FUTURO JÁ COMEÇOU
-     Narrativa: Digital Twins + Synthetic Controls + Federated
+     SLIDE 8 · HAPVIDA — POSICIONAMENTO
+     Narrativa: posicionamento estratégico
      ══════════════════════════════════════════════════════════════════ -->
 <div class="s" data-s="10">
-  <div class="f s7-head">
-    <p class="tag">Módulo 4 · Além do recrutamento</p>
-    <h2>O futuro já começou</h2>
+  <div class="f" style="text-align:center">
+    <p class="tag">Resultados · Hapvida</p>
+    <h2 style="font-size:3.2vw;font-weight:800;line-height:1.08;letter-spacing:-.02em">Hapvida como <span class="grn">plataforma de pesquisa</span></h2>
   </div>
 
-  <div class="horizon">
-    <div class="f hcard" style="border-left-color:#00a868">
-      <span class="icon">🪞</span>
-      <h3>Gêmeos Digitais</h3>
-      <div class="bar" style="background:#00a868"></div>
-      <p>Réplicas virtuais de pacientes. O <strong>FDA já reconhece como evidência complementar</strong>. Simulam resposta antes de recrutar.</p>
-      <p class="note">Warraich, JAMA, 2025 [6] · Moingeon, 2023 [7] · Pammi, Lancet, 2025 [8]</p>
+  <div class="f" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2.5vw;width:100%;margin-top:4vh">
+    <div style="text-align:center;padding:3vh 1.5vw;border-radius:.6vw;background:#f0faf5;border-left:4px solid #00a868">
+      <span style="font-size:3vw;display:block;margin-bottom:1.5vh">🏗️</span>
+      <p style="font-size:1.2vw;font-weight:700;color:#111;line-height:1.4">Dados <strong class="grn">estruturados</strong><br>em escala de milhões<br>de vidas</p>
     </div>
-    <div class="f hcard" style="border-left-color:#2563eb">
-      <span class="icon">⚗️</span>
-      <h3>Controles Sintéticos</h3>
-      <div class="bar" style="background:#2563eb"></div>
-      <p>Substituir placebo com dados reais. <strong>Cerliponase alfa</strong>: aprovada pelo FDA sem placebo. Braço único. 100% RWD.</p>
-      <p class="note">Zannad et al., JACC, 2026 [9]</p>
+    <div style="text-align:center;padding:3vh 1.5vw;border-radius:.6vw;background:#f5f3ff;border-left:4px solid #7c3aed">
+      <span style="font-size:3vw;display:block;margin-bottom:1.5vh">🔄</span>
+      <p style="font-size:1.2vw;font-weight:700;color:#111;line-height:1.4">Pipeline <strong class="pur">contínuo</strong><br>rodando todo dia<br>de forma automática</p>
     </div>
-    <div class="f hcard" style="border-left-color:#7c3aed">
-      <span class="icon">🔐</span>
-      <h3>Federated Learning</h3>
-      <div class="bar" style="background:#7c3aed"></div>
-      <p>Treinar modelos <strong>sem mover dados</strong>. 99% da qualidade de modelos centralizados. GDPR-compliant by design.</p>
-      <p class="note">Sheller, Sci Rep, 2020 [14] · Brauneck, JMIR, 2023 [15]</p>
+    <div style="text-align:center;padding:3vh 1.5vw;border-radius:.6vw;background:#eff6ff;border-left:4px solid #2563eb">
+      <span style="font-size:3vw;display:block;margin-bottom:1.5vh">📡</span>
+      <p style="font-size:1.2vw;font-weight:700;color:#111;line-height:1.4">Cada exame que chega<br><strong class="blu">reavalia elegibilidade</strong><br>em tempo real</p>
     </div>
   </div>
 
-  <p class="ref">Khera et al., Transforming Cardiovascular Care With AI, JACC, 2024 [5]</p>
+  <div class="f" style="text-align:center;margin-top:4vh">
+    <p style="font-size:1.2vw;color:#555;line-height:1.7">Não somos só uma operadora. Somos uma <strong>plataforma de pesquisa</strong><br>com a infraestrutura para se conectar a qualquer rede global.</p>
+  </div>
 </div>
 
 
 <!-- ══════════════════════════════════════════════════════════════════
-     SLIDE 11 · ENCERRAMENTO
+     SLIDE 9 · ENCERRAMENTO
      ══════════════════════════════════════════════════════════════════ -->
 <div class="s" data-s="11">
   <div class="closing">
@@ -946,37 +966,43 @@ const notes={
 
 1:`<h4>SLIDE 2 — Duas Forças da IA (3 min)</h4>
 <p>[ESPAÇO] "Antes de falar de solução, vocês precisam entender as duas forças da IA que vão mudar pesquisa clínica."</p>
-<p>[ESPAÇO] "IA Generativa: é a força que TRANSFORMA. Lê prontuários inteiros em segundos, extrai dados estruturados, gera sumários."</p>
-<p>[ESPAÇO] "IA Preditiva: é a força que PREVÊ. Modelos que aprendem trajetórias — quem vai desenvolver, quem vai responder."</p>
+<p>[ESPAÇO] "IA Generativa: é a força que TRANSFORMA. Lê prontuários inteiros em segundos, extrai dados estruturados, gera sumários. No Stanford, o RECTIFIER usou GPT-4 pra avaliar 23 critérios de elegibilidade — 98% de concordância com clínicos, a dez centavos por paciente."</p>
+<p>[ESPAÇO] "IA Preditiva: é a força que PREVÊ. Na Mayo Clinic, IA aplicada a ECGs de rotina já detecta fibrilação atrial assintomática. Modelos de trajetória cardiovascular conseguem identificar candidatos a ensaios meses antes do diagnóstico formal."</p>
 <p>[ESPAÇO] "O futuro da medicina não é tratar doenças, é tratar trajetórias." Khera et al., JACC, 2024 [5].</p>`,
 
-2:`<h4>SLIDE 3 — Garbage In, Garbage Out (3 min)</h4>
+2:`<h4>SLIDE 3 — Além do Óbvio: IA em RWE (3 min)</h4>
+<p>[ESPAÇO] "Agora, além do recrutamento, a IA está mudando a ESTRUTURA dos estudos."</p>
+<p>[ESPAÇO] "Gêmeos digitais: réplicas virtuais de pacientes. O FDA já reconhece como evidência complementar. Você simula a resposta antes de recrutar."</p>
+<p>[ESPAÇO] "Controles sintéticos: cerliponase alfa pra doença de Batten — aprovada pelo FDA sem grupo placebo. Braço único, 100% com dados reais."</p>
+<p>[ESPAÇO] "Federated learning: treinar modelos entre 10 instituições sem mover um dado. 99% da qualidade. GDPR-compliant by design."</p>`,
+
+3:`<h4>SLIDE 4 — Garbage In, Garbage Out (3 min)</h4>
 <p>[ESPAÇO] "Mas tem um problema. 80% dos dados clínicos estão em texto livre. Garbage in, garbage out."</p>
 <p>[ESPAÇO] "Três pilares: OMOP-CDM, SNOMED CT, AI Scribe."</p>
-<p>[ESPAÇO] "Sem OMOP, não escala multicêntrico. Com OMOP, você conecta Hapvida a qualquer rede global."</p>`,
+<p>[ESPAÇO] "Sem OMOP, não escala multicêntrico. Com OMOP, qualquer operadora se conecta a redes globais."</p>`,
 
-3:`<h4>SLIDE 4 — Milhões de Vidas (1 min)</h4>
+4:`<h4>SLIDE 5 — Milhões de Vidas (1 min)</h4>
 <p>[ESPAÇO] Pausa dramática. "MILHÕES de vidas na base."</p>
 <p>[ESPAÇO] "A gente sabe o que fazer."</p>`,
 
-4:`<h4>SLIDE 5 — Como o Mundo Está Fazendo (3 min)</h4>
-<p>[ESPAÇO] "O pipeline que Stanford, NIH, MSKCC e Europa já validaram."</p>
-<p>[ESPAÇO] "RECTIFIER com GPT-4: 98-100% concordância. Dez centavos por paciente."</p>
-<p>"Gong no JCO: 98 mil triados, 10× menos revisão manual."</p>`,
+5:`<h4>SLIDE 6 — Como o Mundo Está Fazendo (4 min)</h4>
+<p>[ESPAÇO] "Esse é o pipeline que os melhores centros do mundo já validaram: prontuário entra, LLM parseia, faz match com critérios, ranqueia, e o clínico decide."</p>
+<p>[ESPAÇO] "Vou detalhar dois estudos. Primeiro, RECTIFIER, de Stanford. Publicado no JACC em 2024. Usaram GPT-4 pra ler prontuários cardiológicos e avaliar 23 critérios de elegibilidade de um estudo de insuficiência cardíaca. Resultado: 98 a 100% de concordância com clínicos humanos. Custo? Dez centavos por paciente. Versus horas de revisão manual por um coordenador."</p>
+<p>[ESPAÇO] "Segundo, Gong et al., publicado no JCO Clinical Cancer Informatics em 2026. Implementação real, não piloto. 29 estudos oncológicos, quase 100 mil prontuários triados. O sistema identificou 825 elegíveis e facilitou 117 inscrições. A carga de revisão manual caiu 10 vezes. Tempo por prontuário: de 3 minutos pra menos de 2."</p>
+<p>"E não são casos isolados: TrialMatchAI alcançou 92% de acurácia em oncologia, e na Europa um LLM local dobrou a taxa de identificação de elegíveis sem mandar dados pra nuvem."</p>`,
 
-5:`<h4>SLIDE 6 — Visão Geral do Pipeline (2 min)</h4>
+6:`<h4>SLIDE 7 — Visão Geral do Pipeline (2 min)</h4>
 <p>[ESPAÇO] "Agora como a gente faz. Esse é o pipeline completo."</p>
 <p>[ESPAÇO] "Três fases: automática, inteligente e humana."</p>
 <p>"Todo dia às 2h, automático. A IA parseia e descreve. Humanos avaliam e confirmam. Processo contínuo."</p>
 <p>[ESPAÇO] "Vou detalhar cada passo nos próximos slides."</p>`,
 
-6:`<h4>SLIDE 7 — 02:00 AM · Coleta + Match (2 min)</h4>
-<p>[ESPAÇO] "Às 2h da manhã, o sistema acorda. Coleta todas as consultas do dia anterior + pacientes de centros estratégicos dos próximos 7 dias."</p>
-<p>"Ontem: 847 consultas, 1.203 pacientes de centros estratégicos."</p>
-<p>[ESPAÇO] "Faz match determinístico com os critérios. Resultado: 23 pacientes com match completo, 9 parciais."</p>
-<p>"De 2.050 prontuários, 23 passam. Esses agora vão pra IA."</p>`,
+7:`<h4>SLIDE 8 — 02:00 AM · Coleta + Match (2 min)</h4>
+<p>[ESPAÇO] "Às 2h da manhã, o sistema acorda. Coleta todas as consultas do dia anterior + pacientes agendados em centros com estudos ativos nos próximos 7 dias."</p>
+<p>[ESPAÇO] "Faz match determinístico com os critérios de cada estudo. Quem bate tudo: match completo. Quem tem dado pendente: match parcial."</p>
+<p>"Os que passam agora vão pra IA analisar em profundidade."</p>`,
 
-7:`<h4>SLIDE 8 — IA Descreve e Contrapõe (3 min)</h4>
+8:`<h4>SLIDE 9 — IA Descreve e Contrapõe (3 min)</h4>
 <p>[ESPAÇO] "Aqui é o coração do sistema. A IA lê o prontuário inteiro de cada um dos 23 pacientes."</p>
 <p>[ESPAÇO] "Lado esquerdo, duplo sim: M.S.R., 67 anos, LLC. A IA checou cada critério — diagnóstico, BTKi prévio, ECOG, função hepática — e escreveu: 'preenche todos os critérios'. Duplo sim."</p>
 <p>"A.C.F., 71 anos, NSCLC EGFR+. Mesma coisa: a IA confirma e explica por que sim."</p>
@@ -984,7 +1010,7 @@ const notes={
 <p>"L.M.P., mama triplo-negativo: biópsia pendente e Trop-2 não avaliado. A IA diz: 'aguardar resultados'."</p>
 <p>"A IA não é um carimbo automático. Ela explica quando sim e sinaliza quando falta algo."</p>`,
 
-8:`<h4>SLIDE 9 — App + Médico + Contato (2 min)</h4>
+9:`<h4>SLIDE 10 — App + Médico + Contato (2 min)</h4>
 <p>[ESPAÇO] "Aí vai pro app, pros humanos."</p>
 <p>[ESPAÇO] "Vejam a fila: duplo sim em cima, prioridade máxima. M.S.R. e A.C.F. primeiro."</p>
 <p>"Parciais embaixo, esperando exame. J.A.L. esperando PD-L1, L.M.P. esperando biópsia."</p>
@@ -992,15 +1018,10 @@ const notes={
 <p>"Paciente contatado, screening agendado. Vejam ali: R.P.S. contatado dia 27, C.E.N. dia 26."</p>
 <p>"E o ciclo recomeça todo dia às 2h. Processo contínuo. Nenhum paciente escorrega."</p>`,
 
-9:`<h4>SLIDE 10 — Hapvida em Números (1 min)</h4>
-<p>[ESPAÇO] "Os números são nossos, de 2026, reais."</p>
-<p>"170 pacientes elegíveis identificados. 400+ aguardando resultado de exame."</p>
-<p>"Cada exame que chega reavalia elegibilidade em tempo real."</p>`,
-
-10:`<h4>SLIDE 11 — O Futuro Já Começou (2 min)</h4>
-<p>[ESPAÇO] "E para onde estamos indo?"</p>
-<p>[ESPAÇO] "Gêmeos digitais, controles sintéticos, federated learning."</p>
-`,
+10:`<h4>SLIDE 11 — Hapvida como Plataforma (1 min)</h4>
+<p>[ESPAÇO] "A Hapvida tem dados estruturados em escala de milhões de vidas."</p>
+<p>"O pipeline roda todo dia, de forma automática. Cada exame que chega reavalia elegibilidade em tempo real."</p>
+<p>"Não somos só uma operadora. Somos uma plataforma de pesquisa."</p>`,
 
 11:`<h4>SLIDE 12 — Encerramento (1 min)</h4>
 <p>[ESPAÇO] Pausa longa. Ler devagar:</p>
